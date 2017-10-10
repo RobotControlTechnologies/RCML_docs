@@ -117,7 +117,7 @@ Additionally, the *config.ini* file may contain following sections:
 	- * UserID * - the user login in the Repository;
 	- * Path * - a way to the file of the private key (* \*.key *) which is couple to the public key loaded in a repository.
 
-- *[statistics]* – this section may have only one property - *db_path* - the path to the database file where the robots will write statistics about the performed functions. If the database file does not exist, it will be created. If the database already exists, it will be amended. If this property is null or empty, no stats will be recorded.
+- *[statisctic]* – this section may have only one property - *db_path* - the path to the database file where the robots will write statistics about the performed functions. If the database file does not exist, it will be created. If the database already exists, it will be amended. If this property is null or empty, no stats will be recorded.
 
 - *[lib_search_paths]* – search paths for the compiled *RCML* libraries. In this section, the path property may specify the default path to the *RCML* library. There may be several paths, in case each path is set via a separate path property. The required library is searched by the specified paths in the same order in which the path in this section have been specified.
 
