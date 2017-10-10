@@ -19,7 +19,7 @@ From the folder of your OS, download the archive with files of *rcml_build_X.zip
 Extract both of the downloaded archives to the same folder.
 
 Go to the folder with the files extracted and create *config.ini* file there with the following contents:
-```
+```ini
 [robot_modules]
 module = test
 [function_modules]
@@ -90,7 +90,7 @@ The list of the connected modules with breakdown on following sections (types of
 The name of the connected module is specified in the *module* property in the section of the same type as the module. If there are several connected modules of the same type, a separate line is allocated for each of them. Modules of a particular type are loaded in the order, in which they were listed in their section.
 
 An example of setting connected modules in *config.ini*:
-```
+```ini
 [robot_modules]
 module = test
 module = fanuc
@@ -166,13 +166,13 @@ Modules of this type are used for making decision on a choice of the next robot 
 As noted earlier, a program written in the *RCML* language should first be compiled into the byte-code, after which it can be invoked by the interpreter.
 
 For compiling the program, start the *RCML* compiler; by default, the name of its executable (without extension, since it may vary depending on the OS) *is rcml_compiler*. The compiler is to be started with 2 parameters passed to it:
-```
+```bash
 rcml_compiler <rcml_text_file> <rcml_pc_file>
 ```
 The first parameter, *rcml_text_file*, is the path to the file with the *RCML* program, and the second parameter, *rcml_pc_file*, is the path to the file into which the byte-code of the program is to be written.
 
 If compilation is successful, the file with the byte-code will be created, or overwritten if it already exists. And now it can be invoked using the *RCML* interpreter, by default, the name of the executable file is *rcml_interpreter*. At startup, the compiler expects a single parameter – the file with the byte-code. The syntax of the command for starting the interpreter:
-```
+```bash
 rcml_interpreter <rcml_pc_file>
 ```
 **Important**! The interpreter automatically appends the .pc extension to the *rcml_pc_file* path.
@@ -180,7 +180,7 @@ rcml_interpreter <rcml_pc_file>
 ### 1.9 RCML command-line options
 
 The command line of the *RCML* compiler has the following pattern:
-```
+```bash
 rcml_compiler [--version] [--logfile log_file_path] [--without-optimization] <rcml_text_file> <rcml_pc_file>
 ```
 - *--version* - shows the current version of the *RCML* compiler, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the compiler shows the information and immediately exits;
@@ -190,7 +190,7 @@ rcml_compiler [--version] [--logfile log_file_path] [--without-optimization] <rc
 - *rcml_pc_file* is the path to the file that the compiled program is written to.
 
 The command line of the *RCML* interpreter has the following pattern:
-```
+```bash
 rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debug] <rcml_pc_file> [rcml_params]
 ```
 - *--version* - shows the current version of the *RCML* interpreter, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the interpreter shows the information and immediately exits;
@@ -260,11 +260,11 @@ By analogy with *C* and *C++* programming languages, execution begins with a fun
 Additional files of *RCML* programs are included as follows: each file to be included is written from a new line. *Include* keyword must be placed in the beginning followed by a path to the file to be included in double quotes through the separating character (for example, space character).
 
 Syntax:
-```
+```cpp
 include “path_to_file”
 ```
 Examples:
-```
+```cpp
 include “function.rcml”
 include “C:/robot/robot.rcml”
 include “../libs/robot.rcml”
@@ -272,7 +272,7 @@ include “../libs/robot.rcml”
 The path to the file to be included can be absolute or relative. In case of a relative path, the compiler first calculates the absolute path to the file relative to the absolute path to the file, where this inclusion structure is found. If the file is not found by the resulting path, the compiler calculates the absolute path relative to each variant of the path from *path* parameter of *lib_search_paths* section in *config.ini* configuration file in the order in which these paths have been specified in the configuration file.
 
 This path parameter from *lib_search_paths* section of the configuration file is called “default search path”. The syntax for specifying default search paths is as follows:
-```
+```ini
 [lib_search_paths]
 path = path_1
 path = path_2
@@ -290,7 +290,7 @@ You should understand a mechanism to include additional files in the program. Th
 Additional libraries written in *RCML* are included as follows: each library included is written in a new line from *include_lib* keyword in the beginning followed by a separating character (for example, space character), followed by the identifier – library name (to use to apply to the library in the code), and then a separating character and a path to the file with library byte code (pc-file) in double quotes.
 
 Syntax:
-```
+```cpp
 include_lib library_name “path_to_library_file”
 ```
 Example of the program including math library:
@@ -345,13 +345,13 @@ The parameters in the main function *(main)* have a special meaning, see more in
 Single- and multi-line comments are available in *RCML*. Single-line comment begins with double forward slash // and follows until the end of the line.
 
 Example:
-```
+```cpp
 //This is a comment
 ```
 Multi-line comments begin with a combination of characters /\* and continues to the following combination of characters \*/
 
 Example:
-```
+```cpp
 /* This
 is a multi-line
 comment */
@@ -401,7 +401,7 @@ The programmer may not take care of memory consumption, and may not delete the v
 Expressions in *RCML* can consist of numeric constants, variables and returned function results that can be used as operands of the mathematical and logical operations as part of the expression. Operations, in turn, may be unary or binary. Priority of operations in expressions is given in parentheses, just as it is in mathematics. The result of the expression can be assigned to a variable or transferred as a parameter to a function. It is possible for those function parameters that work with these data types. Using special variables to communicate with a robot in the context of expressions is prohibited at the level of syntax rules.
 
 Example expressions:
-```bash
+```cpp
 a = 1 + 1;
 a – 5;
 c = a * b;
@@ -460,7 +460,7 @@ The following rule applies in reverse conversion:
 #### 2.12.1 Conditional Control Structures
 
 *RCML* has only one conditional transfer operator – *if*. Its syntax is as follows:
-```
+```cpp
 if (expression) {
 	//set of operators, if the result of expression is true
 } else {
@@ -472,7 +472,7 @@ The result of expression in parentheses is reduced to a logical type, and if the
 #### 2.12.2 Cyclic Control Structures
 
 Cycle (loop) operator in *RCML* is also unique. It is loop operator. It is a simplified cycle operator in comparison with similar operators in traditional programming languages. It is unconditional, and its block of operators will be executed endlessly, unless it has an appropriate exit structure with prerequisite or without it. The syntax of loop operator is as follows:
-```
+```cpp
 loop {
 	// set of loop operators
 }
@@ -488,15 +488,15 @@ The operator of loop exit – *break*. When it is reached, the current loop is i
 The operator of function exit – *return*. It may be used both with an expression, and without it. In the first case the result of the function will be the result returned by the expression. In the second case, the function will return the default value of 0.0.
 
 The syntax of *return* operator with expression return:
-```
+```cpp
 return expression;
 ```
 Without expression return:
-```
+```cpp
 return;
 ```
 Examples of return operator:
-```
+```cpp
 return 2+2; //function exit with expression return
 return; // function exit without expression return
 ```
@@ -505,18 +505,18 @@ If a *return* operator is specified in the *main* function, its implementation w
 The operator exiting the program – *exit*. When it is reached, the program stops executiong regardless of function where it is specified. This operator (like *return*) may be called both with an expression, and without it. In the first case, the result of the expression is returned to the OS as the exit code of the program, in the second case the exit code of the program is considered to be equal to 0.
 
 The syntax of exit operator with expression return:
-```
+```cpp
 exit expression;
 ```
 Without expression return:
-```
+```cpp
 exit;
 ```
 
 ### 2.13 Exceptions
 
 In *RCML*, it is available to handle exceptions occurring in a particular block of code, as in some other programming languages. General type of exception handling structure begins with *try* operator, then it is followed by a block of operators, where an exception can occur in execution of the operators of this block, then it can be followed by catch operator, and a block of operators to be executed in case of an exception. General type of exception handling structure is as follows:
-```
+```cpp
 try {
 	//block of operators, where an exception can occur
 } catch {
@@ -562,7 +562,7 @@ Try operator has three modes of operation:
 Despite the fact that try operator may take the parameters, it is not a function and does not returns a value.
 
 Example of using the above modes to handle success of robot performance of its function giving it three attempts with a time limit of 2 seconds for each:
-```
+```cpp
 try(“error_try_count”, 3) {
 	try(“error_time_limit”, 2000) {
 		robot->do_something();
@@ -575,11 +575,11 @@ try(“error_try_count”, 3) {
 }
 ```
 Using the *throw* operator, the exception may be used for passing some value (exception value). In this case, the syntax of the *throw* operator will be the following:
-```
+```cpp
 throw expression;
 ```
 For processing the value of the thrown exception, the try operator will have a slightly different syntax: the parameters of the *catch* operator should specify the identifier, i.e., the name of the variable to which the exception will be written:
-```
+```cpp
 try {
 	//the block of operators in which the exception may occur
 } catch (variable_name) {
@@ -587,7 +587,7 @@ try {
 }
 ```
 If at the time of exception the specified variable does not exist, it will be created, otherwise it will be overwritten.
-```
+```cpp
 try {
 	throw 3;
 } catch (E) {
@@ -597,7 +597,7 @@ try {
 The variable, to which the value of the exception will be written, will be available in the *catch* block and beyond it till the end of the function.
 
 An example of creating the variable:
-```
+```cpp
 system.echo(“E = ”, E, “\n”); //error E does not exist yet
 try {
 	throw 3;
@@ -607,7 +607,7 @@ try {
 system.echo(“E = ”, E, “\n”); //will show E = 3, since E has been created in the catch block
 ```
 An example of overwriting the value:
-```
+```cpp
 E = 5;
 system.echo(“E = ”, E, “\n”); //will show E = 5
 try {
@@ -620,7 +620,7 @@ system.echo(“E = ”, E, “\n”); //will show E = 3
 In this way it is possible not only to process exception values passed via the *throw* operator, but also to process exception values passed from functions of robot modules and functional modules, and libraries.
 
 Example:
-```
+```cpp
 try {
 	robot_test->throw_value(10);
 } catch (E) {
@@ -638,13 +638,13 @@ Internal functions refer to the functions described in *RCML* language in the cu
 External functions refer to the functions of *RCML* libraries already compiled, linked to the current program or the functions of functional modules, i.e., the code of these functions is outside the current program in *RCML*.
 
 Syntactically, internal functions in *RCML* are called in the same manner as in other programming languages. You must first specify an identifier – the function name, and then a list of arguments given to it in parentheses:
-```
+```cpp
 identifier(argument1, argument2, argument3)
 ```
 The result of any function call can be assigned to a variable or used in the expression. It should be noted that in the function call, all parameters specified in its description should be transferred through arguments, except for some *RCML* system functions.
 
 Calling an external function has a different syntax:
-```
+```cpp
 source_name.function_name(argument1, argument2, argument3)
 ```
 An identifier (name) of the library linked from the section of inclusions is used as the source name, or the name of the function module specified in the configuration file. Description of names and arguments of external functions can usually be found in the documentation for the respective source – the library or function module.
@@ -711,7 +711,7 @@ function main(){
 }
 ```
 The resulting text will already be compiled into the byte code. The result of this program will be as follows:
-```
+```cpp
 1 = 1.000000
 2 = 2.000000
 3 = 3.000000
@@ -753,7 +753,7 @@ It should be noted that many robot classes may be connected simultaneously, i.e.
 For the robot to be used in the program, its class and function should be specified. The class name of the robot coincides with the name of the robot module in the config.ini file. However, the class of the robot in the *RCML* program should be specified using keyword robot and an underscore. 
 
 The syntax for activating the robot:
-```
+```cpp
 robot_class_of_robot
 ```
 For example, you can call the robot from module test, and then its class will be identified as:
@@ -769,7 +769,7 @@ After receiving the robot of the required class, the programmer can make him per
 Calling a function is visually similar to the object method call in *C*-like programming languages. Robot class must be specified, and then through the pointer character “->” the required function is specified, and then goes the list of arguments to this function in parentheses. 
 
 Robot function call syntax:
-```
+```cpp
 robot_robot_class->robot_function(arguments);
 ```
 For example, you should call do_something function with one argument 1000 from *test* class robot:
@@ -795,7 +795,7 @@ The function is searched only by its name without taking into account the number
 Based on this search algorithm, it can be concluded that user-defined functions have a highest priority in the search, followed by library and then system functions.
 
 However, sometimes a programmer faces the need to use system function, which is re-defined by library function. This case is possible when library function implementation is inefficient, the source code of the library is absent, and there is the need to use this library because it includes other functions. It is possible to directly access system function if you include a dot character “.” before the function name. Function call syntax is as follows:
-```
+```cpp
 robot_robot_class->.robot_function(arguments);
 ```
 the above example is as follows:
@@ -868,11 +868,11 @@ In the method of robot activation described in section ["Using Robots in the Pro
 If in the process of the *RCML* interpreter operation the option to record statistics (see section ["Installation and Configuration of *RCML* Compiler and Interpreter"](#1-3-installation-and...)) was activated, the statistical information about robots operation and the speed of executing their functions is collected. Some modules of robot choise work correctly only with enabled option of statistics recording. For more about data collection, see Section ["Working with *RCML* statistics"](#14-working-with-rcml-statistics). 
 
 Connecting one or several choosing modules is specified in the robot manipulation the operator in angle brackets <>, where all choosing modules are listed, comma-separated. The syntax of this construction is as follows:
-```
+```cpp
 robot_class_of_robot<list_of_choice_modules>
 ```
 An example of connecting choosing module *avg* to choosing a *tarakan* class robot:
-```
+```cpp
 robot_tarakan<avg>
 ```
 In this case, the *tarakan* robot module will request all physical representations of the available robots, and their list will be passed to choosing module *avg*. From the provided list, the choosing module will choose the most appropriate robot, which will be used. The choice algorithm is determined by the choosing module.
@@ -882,13 +882,13 @@ It should be noted that choosing a robot using a choosing module usually takes l
 If the robot chosen by the choosing module has become engaged in another process, the choice procedure starts again, querying the robot module for available robots.
 
 The choosing module may be also indicated in case of using an abstract robot. For example, indication of statistics module *avg*, with abstract robot:
-```
+```cpp
 robot<avg>
 ```
 In this case, *RCML* get a list of all presentations of the available robots from all robot modules matching this call. From the list of robots representations, only one robot of a particular class will be chosen.
 
 In case several choice modules were indicated for robot initialization. For example: 
-```twig
+```cpp
 robot_tarakan<test1, test2, test3>
 ```
 In this case, every choosing module will get a list of representations of the available robots, out of which each module will choose one robot. In this case, the order of modules indication determines the sequence of decision-making by the modules, as well as the priority of the robot chosen by a particular choosing module, which may be expressed in points. The first specified choosing module will be the first to select a robot, and the robot selected by it will have the maximum priority in points that will be equal to the number of the specified choosing modules. Accordingly, the last specified module will be the last to make decision, and the robot it chooses will have the priority equal to one point. If the choosing modules choose for activation different robots from the list of the available robots, the robot with the highest points will be activated, i.e. the robot with the highest priority. If the robots chosen for activation have the same points, the robot chosen by the first choosing module will be selected. 
@@ -908,7 +908,7 @@ The basic operating principle of *RCML* environment when switching to hand contr
 Figure 5 Example robot axes and control device axes
 
 This example includes a robot crawler (shown to the left), which can move into its new absolute position of the plane through a series of changes in its position along two axes: *R* axes of movement (forward or reverse) and A axis of rotation A (left or right). And there is a simple control device (a joystick) (shown to the right) which can be deflected in the plane from its initial position along two axes – *X* and *Y*. Accordingly, by means of *RCML*, you can relate joystick and robot axes so that joystick deflection results in robot movement. For example, joystick deflection along Y axis in the positive direction causes movement forward, and joystick deflection along X axis in the negative direction causes robot turn to the left. Let’s assume that this robot is specified in *RCML* environment with tarakan module, and the joystick, respectively, with joy control module. *RCML* code to link them in hand control mode to obtain the above effect, is as follows:
-```
+```cpp
 @r = robot_tarakan;
 hand_control(@r, “joy”, “R”, “Y”, “A”, “Y”);
 ```
@@ -1053,7 +1053,7 @@ Example of mode flag use:
 #@r->do_something(1000);
 ```
 Example of set system function use:
-```
+```cpp
 @r = robot_test;
 set(“behavior”,~);
 //all subsequent robot function calls will be executed
@@ -1087,7 +1087,7 @@ However, there may be another situation where the robot must execute a series of
 To compensate this effect, a mechanism of batch command sending to the robot ha been introduced. The commands received through robot function calls, can be combined into a single batch and sent it entirely to robot representation. To send a command to the batch, place “>” character before function call. To send the batch for execution, call *send_package()* system function.
 
 Example:
-```
+```cpp
 //sending a command to the batch
 >robot_test->do_something(1000);
 //sending the batch for execution
@@ -1167,7 +1167,7 @@ system.send_package(#);
 system.send_package(~);
 ```
 Additionally, send_package function is the only system function that takes into account the execution flag before its call, including the default execution flag:
-```
+```cpp
 // placing a command to the batch
 >robot_test->do_something(1000);
 // sending the batch without waiting for completion
@@ -1192,7 +1192,7 @@ As can be seen from the above example, to have the highest priority among the wa
 The data from the OS may be passed to the *RCML* program via the command line. However, at this stage of language development only real data types may be passed. In order to have access to the parameters in the *RCML* code passed via the command line, add necessary parameters to the *main* function.
 
 The values are passed to these parameters of the *main* function by adding the parameter value to the invocation command of the *RCML* interpreter after specifying the file with the PC code. Passing a parameter with a value will be as follows:
-```
+```bash
 -Pparameter_name=parameter value
 ```
 For example, let there be a *test.rcml* file with the following content:
@@ -1253,7 +1253,7 @@ The following nomenclature of description of file to be created shall be used to
 The very first line shall include a library interface identifier (IID) – a unique set of 32 bytes describing the library interface version, i.e., the current set of functions provided by a library, and their parameters. This IID must be unique, because the interpreter distinguishes between different libraries using this parameter only. To make it more unique, it is recommended to use all 32 bytes of the length permitted. Other bytes following the 32th byte, will be discarded.
 
 Syntax:
-```
+```cpp
 IID “interface_identifier”
 ```
 Example library ID names:
