@@ -113,7 +113,7 @@ Additionally, the *config.ini* file may contain following sections:
 
 - *[Repository]* - contains only property * URI * in which the Repository address for receiving *RCML* modules is specified (by default *https://repository.rcml.info/api*).
 
-- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#16rcml). Contains the following properties:
+- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#17rcml). Contains the following properties:
 	- * UserID * - the user login in the Repository;
 	- * Path * - a way to the file of the private key (* \*.key *) which is couple to the public key loaded in a repository.
 
@@ -194,7 +194,7 @@ The command line of the *RCML* interpreter has the following pattern:
 rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debug] <rcml_pc_file> [rcml_params]
 ```
 - *--version* - shows the current version of the *RCML* interpreter, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the interpreter shows the information and immediately exits;
-- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"] (#163)
+- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"] (#173)
 - *--logfile log_file_path* - writes the output of the *RCML* interpreter to a file in the *log_file_path* part;
 - *--debug* - creates a connection to launched *RCML* debugger for debugging and step by step execution of *RCML* programs;
 - *rcml_pc_file* is the path to the file with compiled *RCML* program; and
@@ -217,7 +217,7 @@ rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debu
 3. Special symbols – symbols that perform specific functions in construction of various language constructs: + - * / = { } ( ) <> , ; : ~ # @ ! "
 4. Composing characters – a group of characters that are seen by the compiler as a unified whole:  ::  ->  ==  >=  <=  !=
 5. “Unused” characters – characters that are not included in the set indicated above, but, nevertheless, can be used in comments or to set values of the constants and strings;
-6. Reserved words listed in section ["List of the reserved keywords"] (#11-1)
+6. Reserved words listed in section ["List of the reserved keywords"] (#12-1)
 
 ### 2.2 Rules for Identifier Compilation
 
@@ -253,7 +253,7 @@ Section of inclusions always goes before the section of functions. Other *RCML* 
 
 The section of functions starts after the first mention of function keyword. Main program code is specified in the section of functions, which consists of functions. 
 
-By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"] (#10rcml)
+By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"] (#11-creating-rcml-library-file)
 
 ### 2.4 Inclusion of Additional RCML Files into the Program
 
@@ -301,7 +301,7 @@ function main() {
 	system.echo("\n1 + 2 =",s,"\n");
 }
 ```
-The process of creating the library is described in Section ["Creating *RCML* Library File"](#10-creating-rcml-library-file).
+The process of creating the library is described in Section ["Creating *RCML* Library File"](#11-creating-rcml-library-file).
 
 Library file search process by the compiler is similar to the search of the file to be included. However, the library code is not included into the executable program code. A link to the library file is created in the executable program, and running such a program will also require the file of the library compiled, as in case of compilation.
 
@@ -1284,10 +1284,10 @@ export function robot_test::user_function(s) {
 	robot->print("Robot Func All right\n", 0);
 }
 ```
-It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#13-additional-information-about...).
+It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#14-additional-information-about...).
 ***
 
-# 11 The List Of Reserved Keywords in RCML
+# 12 The List Of Reserved Keywords in RCML
 
 | | | | | | |
 |:--|:--|:--|:--|:--|:--|
@@ -1295,7 +1295,7 @@ It should be remembered that inclusion of the library into another program makes
 |exit|export|function|if|IID|include|
 |include_lib|loop|return|robot|throw|try|
 
-# 12 Syntax Map of RCML
+# 13 Syntax Map of RCML
 ```cpp
 PROGRAM: IID HEADERS
 
@@ -1423,7 +1423,7 @@ ARG:    EXPR
 ```
 ***
 
-# 13 Additional Information About Interface Identifiers according to libraries.
+# 14 Additional Information About Interface Identifiers according to libraries.
 
 A line, placed after the keyword "IID" in *RCML* library code is a unique library interface version identifier, i.e. it can be used to give uniqueness to the library and its particular version.
 
@@ -1434,7 +1434,7 @@ To make the identifier more unique, it is recommended to specify a unique identi
 The unique identifier may to some extent serve as a tool for library developer, pointing *RCML* environment on compatibility of different versions of the library developed. By changing the code without changing this identifier, the developer indicates succession of the new version of the library in relation to the old one, i.e. the new version can be used to execute *RCML* programs compiled with the old version. It is recommended to do this only if library function names are not changed, as well as the number of their parameters and the program behavior executing these functions. Otherwise, it is recommended to specify a new unique interface identifier, to inform *RCML* environment that a new version of the library has significant differences from the old one and behavior of the executed *RCML* program compiled with the old version is not defined for the new version.
 ***
 
-# 14 List of Abbreviations
+# 15 List of Abbreviations
 
 Below you can find a list of abbreviations used in this manual in the order they are first mentioned in the text:
 
@@ -1451,12 +1451,12 @@ Below you can find a list of abbreviations used in this manual in the order they
 **PC** – Pseudo Code.
 ***
 
-# 15 Additional RCML Documentation
-### 15.1 Documentation for Developers
+# 16 Additional RCML Documentation
+### 16.1 Documentation for Developers
 
 The developer documentaion contains a description of the API and supporting material that developers might use to write their own *RCML* modules. This documentaton is available in a [developer's repository](https://github.com/rcml-tech/RCML_docs_developer)
 
-### 15.2 Available modules and their API
+### 16.2 Available modules and their API
 
 Part of the open modules developed and supported within the framework of the activities of RCML LLC is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
 
@@ -1466,7 +1466,7 @@ Modules developed by the *RCML* community, as well as documentation for them, ca
 
 You can read how to join the *RCML* development community in [repository with community memorandum](https://github.com/rcml-tech/community_RULES).
 
-### 15.3 Proprietary modules
+### 16.3 Proprietary modules
 
 Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the RCML LLC are prioritized and access to documentation is limited.
 
@@ -1481,8 +1481,8 @@ List of available proprietary modules:
 
 Access to proprietary modules is granted to customers of *RCML LLC* or on request, on an individual basis. The request in free form can be sent to `license@rcml.tech`
 
-# 16 Obtaining RCML License
-### 16.1 User registration in Repository
+# 17 Obtaining RCML License
+### 17.1 User registration in Repository
 
 Create your own account on Repository service webpage [Repository](https://repository.rcml.info/#/sign-up)
 
@@ -1502,11 +1502,11 @@ Key might be generated according to the commands on the screenshots below.
 
 ![](images/06.png)
 
-### 16.2 RCML Configuration
+### 17.2 RCML Configuration
 
 The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"] (#13rcml)
 
-### 16.3 Collecting of Hardware Information
+### 17.3 Collecting of Hardware Information
 
 If you get a license for commercial use of *RCML* please make sure that you have successfully filled in the following terms:
 
@@ -1526,9 +1526,9 @@ On every PC or Controller run the following command in the console: `rcml_intepr
 
 A `hardwareInfo.json` file will be generated. This file contains information about the hardware configuration and the connected industrial robots.
 
-### 16.4 Sending hardware configuration
+### 17.4 Sending hardware configuration
 
-Repeat steps 18.2 and 18.3 on all PCs and controllers which requires a license.
+Repeat steps 17.2 and 17.3 on all PCs and controllers which requires a license.
 
 Send all `hardwareInfo.json` files to the following e-mail address `license @ rcml.tech`.
 
