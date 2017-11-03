@@ -672,6 +672,11 @@ The system module has the following functions:
   - Fourth parameter – the name of control device axis as a string constant or an expression that will set the values for robot axis specified in the previous parameter.
   - Fifth and sixth, seventh and eighth, etc. parameters are always set in pairs: robot axis and the source of values for it.
 - *system.send_package* – a command to send the accumulated command package to robots. The only parameter is the flag for the mode of execution of commands from the package, ~ or #. Read more about this function in Section ["Specifying Function Execution Modes"](#6-specifying-function-execution...).
+- *system.mutex_lock* – attempts to lock the mutex by the name specified as a string parameter. If the mutex is free, this function locks it. If the mutex is locked, then function waits its free, and then locks it. More in the section ["Locks"](#10locks).
+- *system.mutex_unlock* – frees the mutex by the name specified as a string parameter. If the mutex is already free, the exception is thrown.
+- *system.semaphore_create_lock* - creates a semaphore with the name specified as the first parameter and the number of locks specified in the second parameter. If a semaphore with this name is already created, then function throws an exception.
+- *system.semaphore_wait* – waits for the semaphore to switch until the lock counter is zero. The name of the semaphore is specified as a single string parameter.
+- *system.semaphore_unlock* – reduces the lock counter of semaphore by 1, waites one string parameter - the name of the semaphore.
 
 ### 2.16 Macros
 
@@ -1244,7 +1249,172 @@ Data may be passed from *RCML* to the OS in two ways:
 It occurs by throwing an exception without catching it up to the top level, i.e., before and including the *main* function. In this case the *RCML* program will terminate with code 1, and the value of the exception will not be passed. The mechanism of processing and passing exceptions is discussed in more details in Section ["Exceptions"](#2-13-exceptions).
 ***
 
-# 10 Creating RCML Library File
+# 10 Locks
+
+*RCML* implemented a locking mechanism to control the process of parallel execution that can affect the same objects.
+
+The simplest example of the need for locking, when two or more independent robots take or bring some details to the same place. Necessary to prohibit several robots from entering the given common space zone simultaneously to prevent a collision of these robots.
+
+Two concepts are used to manage locks in RCML: mutexes and semaphores.
+
+### 10.1 Mutexes
+
+Mutex is a mechanism that restricts the operation of several functions (threads) running concurrently over one section of the code.
+
+Some of the problems that mutexes can solve:
+- prohibition of simultaneous execution of specific code sections (critical sections);
+- access to a critical resource by turns (for an important resource for which simultaneous access is not possible (or undesirable));
+- synchronization of processes and threads (for example, you can initiate event processing by unlocks a mutex).
+
+This mechanism is may used for the following tasks in the approach for programming robots:
+- prohibiting the entry of several robots into the same zone;
+- access to the work area by turns, for example, for taking or dropping a part;
+- a message from one robot to another that it's about doing something.
+
+The mutex has a unique name and can be in only two states: locked or free. A previously locked mutex can not be locked again. Thus, execution of all code sections that try to work with the same mutex is suspended until the mutex is available.
+
+The mutex lock is performed by the system function *system.mutex_lock*. It has only one parameter - the name of the mutex (string). If a mutex with this name already exists, execution of this section of code will be suspended until the mutex is unlocked.
+
+Call the system function *system.mutex_unlock* to unlock the mutex. It has only one parameter - the name of the mutex. After unlocking the mutex, it becomes free to re-lock and only one of the pending executions can lock it.
+
+**The order is random for locking the mutex by the pending executions.**
+
+Example of using mutexes:
+```cpp
+@r = robot_builder;
+
+@r->movingToStorage();
+
+system.mutex_lock("storage_zone");
+// code that should be executed by only one robot at the moment
+@r->enterStorageZone();
+@r->gripperClose();
+@r->leaveStorageZone();
+system.mutex_unlock("storage_zone");
+
+@r->movingToBuilding();
+
+system.mutex_lock("build_zone");
+@r->enterBuildZone();
+@r->gripperOpen();
+@r->leaveBuildZone();
+system.mutex_unlock("build_zone");
+
+delete @r;
+```
+
+In this example, critical sections are created by using the mutexes. Critical sections is sections of code, that can be executed by only one execution at a given time. When creating critical sections, it is recommended to minimize the code falling into the critical section and to free the mutex in the same function in which it was locked.
+
+### 10.2 Semaphores
+
+In RCML, the semaphore is a mechanism for generating events from one or more sources to one or more recipients.
+
+The semaphore also has a unique name, but unlike the mutex it has a lock count. Call the system function *system.semaphore_create_lock* to create a semaphore. It has two parameters:
+- the name of the semaphore - a string;
+- number of locks - number - how many times the semaphore should be freed before it create the event.
+
+If a semaphore with this name is already created, an exception will be thrown. The semaphore will exist until the number of locks is greater than zero.
+
+Waiting for the semaphore to be freed is via the *system.semaphore_wait* function. The name of the waited semaphore need specified as a single string parameter. When the number of locks reaches zero, execution continues with this function, before that the current thread will be in sleep state.
+
+Each unlock of the semaphore reduces the number of locks by 1. The semaphore is freed by the function *system.semaphore_unlock*. The parameter of this function specifies the name of the semaphore.
+
+if the semaphore by the specified name does not exist, then the functions *system.semaphore_wait* and *system.semaphore_unlock* throw an exception.
+
+Example of creating an event from set to one:
+```
+function mountBlock(level_num) {
+  r = robot_builder;
+
+  @r->movingToStorage();
+
+  system.mutex_lock("storage_zone");
+  @r->enterStorageZone();
+  @r->gripperClose();
+  @r->leaveStorageZone();
+  system.mutex_unlock("storage_zone");
+
+  @r->movingToBuilding();
+
+  system.mutex_lock("build_zone");
+  @r->enterBuildZone(level_num);
+  @r->gripperOpen();
+  @r->leaveBuildZone(level_num);
+  system.mutex_unlock("build_zone");
+
+  delete @r;
+  
+  system.semaphore_unlock("level_done");
+}
+
+function main() {
+  
+  // build 3 levels of three blocks
+  
+  system.semaphore_create_lock("level_done", 3);
+  // installation of blocks is executed in parallel
+  ~mountBlock(1);
+  ~mountBlock(1);
+  ~mountBlock(1);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the first level is ready!
+  
+  system.semaphore_create_lock("level_done", 3);
+  ~mountBlock(2);
+  ~mountBlock(2);
+  ~mountBlock(2);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the second level is ready!
+
+  system.semaphore_create_lock("level_done", 3);
+  ~mountBlock(3);
+  ~mountBlock(3);
+  ~mountBlock(3);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the third level is ready!
+}
+```
+
+In this example, the main function waits for the child functions to complete the installation of blocks by control a number of robots. The construction of the next level is carried out only after the completion of the previous one.
+
+An example of creating an event from one thread to a set. Let's add the possibility of simultaneously start building to the previous example:
+
+```cpp
+function mountBlock(level_num) {
+  system.semaphore_wait("start_work");
+  
+  ...
+}
+
+function main() {
+  
+  // build 3 levels of three blocks
+  
+  system.semaphore_create_lock("start_work", 1);
+  system.semaphore_create_lock("level_done", 3);
+  // installation of blocks is executed in parallel
+  ~mountBlock(1);
+  ~mountBlock(1);
+  ~mountBlock(1);
+  
+  // give a signal to start
+  system.semaphore_unlock("start_work", 1);
+  
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the first level is ready!
+  
+  ...
+}
+```
+***
+
+
+
+# 11 Creating RCML Library File
 
 Libraries in *RCML* are analogues of dynamically connected libraries into modern programming tools and use for reusing the same code in different *RCML* programs. Libraries are the ladders of compiled *RCML* programs, i.e. containing only the compiled binary bytecode, without giving access to its source code.
 
