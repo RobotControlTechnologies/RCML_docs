@@ -1322,7 +1322,7 @@ delete @r;
 Функции *system.semaphore_wait* и *system.semaphore_unlock* бросают исключение если семафор с указанным именем не существует.
 
 Пример создания события от множества к одному:
-```
+```cpp
 function mountBlock(level_num) {
   r = robot_builder;
 
