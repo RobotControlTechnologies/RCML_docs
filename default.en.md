@@ -131,7 +131,7 @@ The files of all supported locales available for download from the appropriate d
 
 [https://sourceforge.net/projects/rcmlang/files/translations/](https://sourceforge.net/projects/rcmlang/files/translations/)
 
-You can learn more about how to add your own locale to *RCML* project in the locales repository webpage:
+You can learn more about how to add your own locale to *RCML* project in the locales repository web page:
 
 [https://github.com/RobotControlTechnologies/RCML_translations](https://github.com/RobotControlTechnologies/RCML_translations)
 
@@ -153,13 +153,13 @@ You can add new features to *RCML* language through function modules that are no
 
 ### 1.6 Details of Control Modules
 
-Modules of this type are used for making decisions about choosing the next robot for performing a particular function. Alternatively, the choice may be based on previously accumulated statistical data about this function, robot, or the program. Using the choosing modules, it is possible to choose the robot by various different algorithms used in the modules. Usually, a separate module is a separate algorithm for choosing the robot.
-
-Without these modules, the robots are chosen at the discretion of robots modules. Read more about the mechanism of choosing the robot in section ["Using the robot choosing module"](#3-7-using-the-robot-choosing...).
+The control modules are used to connect various control devices to the *RCML* environment in order to use these devices in the manual control of robots whose modules provide this capability. This type of module is similar to robot modules in the sense that the API breaks the dependencies between the control device and the robot. Thus, it is possible to control the same robot by different devices, as well as the possibility of using the same control device for different robots. Of course, this also achieves the same effect of hiding the implementation of the communication device control from the environment *RCML* and the ability to connect a variety of control devices.
 
 ### 1.7 Details of Robot Choice Modules
 
-Modules of this type are used for making decision on a choice of the next robot in need for execution of needed function. Choice can be based on the earlier collected statisticall data about the function, robot or program. With use of robot choice modules it is possible to make a choice of robot based on the algorithms supported by conrecte robot. Usually one module represent one algorithm of a choise of the robot.
+Modules of this type are used to decide on the choice of the next robot if you need to perform a particular function. Alternatively, the choice can be based on historical data accumulated earlier, about this function, the robot or the program. Through the selection modules it is possible to select the robot according to the various algorithms incorporated in them (modules). Usually, a separate module represents a separate algorithm for selecting a robot.
+
+Without these modules, robots are selected by robot modules. For more information about the work of the robot selection mechanism in the section ["Using the robot choosing module"](#3-7-using-the-robot-choosing...).
 
 ### 1.8 Compiling and Running RCML Program
 
@@ -185,7 +185,7 @@ rcml_compiler [--version] [--logfile log_file_path] [--without-optimization] <rc
 ```
 - *--version* - shows the current version of the *RCML* compiler, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the compiler shows the information and immediately exits;
 - *--logfile log_file_path* - writes the output of the *RCML* compiler to a file in the *log_file_path* part;
-- *--without-optimization* - turns off optimization of byte code executed by compiler to considerably increase the speed of compiler when uploading a larage amount of dots from CAM envrironment to *RCML* program (postprocessing).
+- *--without-optimization* - turns off optimization of byte code executed by compiler to considerably increase the speed of compiler when uploading a large amount of dots from CAM environment to *RCML* program (postprocessing).
 - *rcml_text_file* is the path to the file with textual representation of the *RCML* program; 
 - *rcml_pc_file* is the path to the file that the compiled program is written to.
 
@@ -194,7 +194,7 @@ The command line of the *RCML* interpreter has the following pattern:
 rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debug] <rcml_pc_file> [rcml_params]
 ```
 - *--version* - shows the current version of the *RCML* interpreter, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the interpreter shows the information and immediately exits;
-- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"] (#173)
+- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"](#173)
 - *--logfile log_file_path* - writes the output of the *RCML* interpreter to a file in the *log_file_path* part;
 - *--debug* - creates a connection to launched *RCML* debugger for debugging and step by step execution of *RCML* programs;
 - *rcml_pc_file* is the path to the file with compiled *RCML* program; and
@@ -217,7 +217,7 @@ rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debu
 3. Special symbols – symbols that perform specific functions in construction of various language constructs: + - * / = { } ( ) <> , ; : ~ # @ ! "
 4. Composing characters – a group of characters that are seen by the compiler as a unified whole:  ::  ->  ==  >=  <=  !=
 5. “Unused” characters – characters that are not included in the set indicated above, but, nevertheless, can be used in comments or to set values of the constants and strings;
-6. Reserved words listed in section ["List of the reserved keywords"] (#12-1)
+6. Reserved words listed in section ["List of the reserved keywords"](#12-1)
 
 ### 2.2 Rules for Identifier Compilation
 
@@ -253,7 +253,7 @@ Section of inclusions always goes before the section of functions. Other *RCML* 
 
 The section of functions starts after the first mention of function keyword. Main program code is specified in the section of functions, which consists of functions. 
 
-By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"] (#11-creating-rcml-library-file)
+By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"](#11-creating-rcml-library-file)
 
 ### 2.4 Inclusion of Additional RCML Files into the Program
 
@@ -502,7 +502,7 @@ return; // function exit without expression return
 ```
 If a *return* operator is specified in the *main* function, its implementation will lead to termination of the *RCML* program, and the value passed via this operator will be passed to the OS as the program exit status. However, the passed value will be rounded to integer by dropping the fraction part.
 
-The operator exiting the program – *exit*. When it is reached, the program stops executiong regardless of function where it is specified. This operator (like *return*) may be called both with an expression, and without it. In the first case, the result of the expression is returned to the OS as the exit code of the program, in the second case the exit code of the program is considered to be equal to 0.
+The operator exiting the program – *exit*. When it is reached, the program stops execution regardless of function where it is specified. This operator (like *return*) may be called both with an expression, and without it. In the first case, the result of the expression is returned to the OS as the exit code of the program, in the second case the exit code of the program is considered to be equal to 0.
 
 The syntax of exit operator with expression return:
 ```cpp
@@ -663,7 +663,7 @@ The system module has the following functions:
 - *system.echo* – a function of data output transferred as arguments to the standard output. It can have any variable number of parameters including the numbers and string constants.
 - *system.set*  – a function of change in *RCML* environment system parameters. It has two arguments: the name of a system parameter and its new value. The name of a system parameter is defined by a string constant, and the new value of this parameter depends on the system parameter specified. Now there is only one system parameter in *RCML* environment:
   - *"behavior"* – function execution behavior by default. The second parameter is the mode flag, character ~ or #. See Section ["Batch Data Transmission to Robots"](#8-batch-data-transmission-to...) for details about execution modes.
-  - *"priority"* - a priority of robots usage in current function. The second parameter of a fuction is a real number, the bigger the value the higher priority of a function in case of robot usage.
+  - *"priority"* - a priority of robots usage in current function. The second parameter of a function is a real number, the bigger the value the higher priority of a function in case of robot usage.
 - *system.sleep* – a temporary pause in the program execution process. It has one numeric parameter – the pause time in milliseconds.
 - *system.hand_control* – enabling manual control for a robot. This function transfers the robot in hand control mode by the said control module. Execution of the main program for the period of hand control is suspended. This function has a variable number of parameters:
   - First parameter – a special variable associated with the appropriate physical robot. Mandatory parameter;
@@ -676,7 +676,7 @@ The system module has the following functions:
 - *system.mutex_unlock* – frees the mutex by the name specified as a string parameter. If the mutex is already free, the exception is thrown.
 - *system.semaphore_create_lock* - creates a semaphore with the name specified as the first parameter and the number of locks specified in the second parameter. If a semaphore with this name is already created, then function throws an exception.
 - *system.semaphore_wait* – waits for the semaphore to switch until the lock counter is zero. The name of the semaphore is specified as a single string parameter.
-- *system.semaphore_unlock* – reduces the lock counter of semaphore by 1, waites one string parameter - the name of the semaphore.
+- *system.semaphore_unlock* – reduces the lock counter of semaphore by 1, takes one string parameter - the name of the semaphore.
 
 ### 2.16 Macros
 
@@ -956,7 +956,7 @@ In this case, the path selection algorithm is required for the robot, which shou
 
 # 5 Writing Own New Functions for Robots
 
-Writing own functions for the existing robots is one of the features of *RCML* language. However, it should be noted that according to the canons of programming, new functions should be based on those provided by robot developer through robot module for *RCML* language. This feature is very useful for standardizing names and parameters of the same functions and robots for its subsequent use through the abstract robot. And if robot developer foreseeingly left the access to low-level functions of the robot through robot module, it is possible to expand high-level robot functionality.
+Writing own functions for the existing robots is one of the features of *RCML* language. However, it should be noted that according to the canons of programming, new functions should be based on those provided by robot developer through robot module for *RCML* language. This feature is very useful for standardizing names and parameters of the same functions and robots for its subsequent use through the abstract robot. And if robot developer prudently left the access to low-level functions of the robot through robot module, it is possible to expand high-level robot functionality.
 
 ### 5.1 Writing Functions for a Certain Robot Class
 
@@ -1255,7 +1255,7 @@ It occurs by throwing an exception without catching it up to the top level, i.e.
 
 The simplest example of the need for locking, when two or more independent robots take or bring some details to the same place. Necessary to prohibit several robots from entering the given common space zone simultaneously to prevent a collision of these robots.
 
-Two concepts are used to manage locks in RCML: mutexes and semaphores.
+Two concepts are used to manage locks in *RCML*: mutexes and semaphores.
 
 ### 10.1 Mutexes
 
@@ -1307,7 +1307,7 @@ In this example, critical sections are created by using the mutexes. Critical se
 
 ### 10.2 Semaphores
 
-In RCML, the semaphore is a mechanism for generating events from one or more sources to one or more recipients.
+In *RCML*, the semaphore is a mechanism for generating events from one or more sources to one or more recipients.
 
 The semaphore also has a unique name, but unlike the mutex it has a lock count. Call the system function *system.semaphore_create_lock* to create a semaphore. It has two parameters:
 - the name of the semaphore - a string;
@@ -1322,7 +1322,7 @@ Each unlock of the semaphore reduces the number of locks by 1. The semaphore is 
 if the semaphore by the specified name does not exist, then the functions *system.semaphore_wait* and *system.semaphore_unlock* throw an exception.
 
 Example of creating an event from set to one:
-```
+```cpp
 function mountBlock(level_num) {
   r = robot_builder;
 
@@ -1412,11 +1412,9 @@ function main() {
 ```
 ***
 
-
-
 # 11 Creating RCML Library File
 
-Libraries in *RCML* are analogues of dynamically connected libraries into modern programming tools and use for reusing the same code in different *RCML* programs. Libraries are the ladders of compiled *RCML* programs, i.e. containing only the compiled binary bytecode, without giving access to its source code.
+Libraries in *RCML* are analogues of dynamically connected libraries into modern programming tools and use for reusing the same code in different *RCML* programs. Libraries are the ladders of compiled *RCML* programs, i.e. containing only the compiled binary byte code, without giving access to its source code.
 
 The following nomenclature of description of file to be created shall be used to create a library.
 
@@ -1466,6 +1464,7 @@ It should be remembered that inclusion of the library into another program makes
 |include_lib|loop|return|robot|throw|try|
 
 # 13 Syntax Map of RCML
+
 ```cpp
 PROGRAM: IID HEADERS
 
@@ -1624,7 +1623,7 @@ Below you can find a list of abbreviations used in this manual in the order they
 # 16 Additional RCML Documentation
 ### 16.1 Documentation for Developers
 
-The developer documentaion contains a description of the API and supporting material that developers might use to write their own *RCML* modules. This documentaton is available in a [developer's repository](https://github.com/rcml-tech/RCML_docs_developer)
+The developer documentation contains a description of the API and supporting material that developers might use to write their own *RCML* modules. This documentation is available in a [developer's repository](https://github.com/rcml-tech/RCML_docs_developer)
 
 ### 16.2 Available modules and their API
 
@@ -1640,7 +1639,7 @@ You can read how to join the *RCML* development community in [repository with co
 
 Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the RCML LLC are prioritized and access to documentation is limited.
 
-The proprietary modules work only with the industrial version of *RCML*, which requires a commertial license on the industrial equipment.
+The proprietary modules work only with the industrial version of *RCML*, which requires a commercial license on the industrial equipment.
 
 List of available proprietary modules:
 
@@ -1654,7 +1653,7 @@ Access to proprietary modules is granted to customers of *RCML LLC* or on reques
 # 17 Obtaining RCML License
 ### 17.1 User registration in Repository
 
-Create your own account on Repository service webpage [Repository](https://repository.rcml.info/#/sign-up)
+Create your own account on Repository service web page [Repository](https://repository.rcml.info/#/sign-up)
 
 ![](images/02.png)
 
@@ -1674,7 +1673,7 @@ Key might be generated according to the commands on the screenshots below.
 
 ### 17.2 RCML Configuration
 
-The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"] (#13rcml)
+The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"](#13rcml)
 
 ### 17.3 Collecting of Hardware Information
 
@@ -1690,7 +1689,7 @@ If you get a license for commercial use of *RCML* please make sure that you have
 	- Connected to the local network;
 	- Switched to auto-mode (acknowledgment of security system warnings has been performed).
 	
-On every PC or Controller run the following command in the console: `rcml_intepreter - hardware-info`
+On every PC or Controller run the following command in the console: `rcml_intepreter --hardware-info`
 
 ![](images/07.png)
 
@@ -1700,6 +1699,6 @@ A `hardwareInfo.json` file will be generated. This file contains information abo
 
 Repeat steps 17.2 and 17.3 on all PCs and controllers which requires a license.
 
-Send all `hardwareInfo.json` files to the following e-mail address `license @ rcml.tech`.
+Send all `hardwareInfo.json` files to the following e-mail address `license@rcml.tech`.
 
 License key for your PCs and controllers will be send back from the same e-mail address.
