@@ -113,7 +113,7 @@ Additionally, the *config.ini* file may contain following sections:
 
 - *[Repository]* - contains only property * URI * in which the Repository address for receiving *RCML* modules is specified (by default *https://repository.rcml.info/api*).
 
-- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#17rcml). Contains the following properties:
+- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#17-obtaining-rcml-license). Contains the following properties:
 	- * UserID * - the user login in the Repository;
 	- * Path * - a way to the file of the private key (* \*.key *) which is couple to the public key loaded in a repository.
 
@@ -194,7 +194,7 @@ The command line of the *RCML* interpreter has the following pattern:
 rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debug] <rcml_pc_file> [rcml_params]
 ```
 - *--version* - shows the current version of the *RCML* interpreter, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the interpreter shows the information and immediately exits;
-- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"](#173)
+- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"](#17-3-collecting-of-hardware...)
 - *--logfile log_file_path* - writes the output of the *RCML* interpreter to a file in the *log_file_path* part;
 - *--debug* - creates a connection to launched *RCML* debugger for debugging and step by step execution of *RCML* programs;
 - *rcml_pc_file* is the path to the file with compiled *RCML* program; and
@@ -217,7 +217,7 @@ rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debu
 3. Special symbols – symbols that perform specific functions in construction of various language constructs: + - * / = { } ( ) <> , ; : ~ # @ ! "
 4. Composing characters – a group of characters that are seen by the compiler as a unified whole:  ::  ->  ==  >=  <=  !=
 5. “Unused” characters – characters that are not included in the set indicated above, but, nevertheless, can be used in comments or to set values of the constants and strings;
-6. Reserved words listed in section ["List of the reserved keywords"](#13)
+6. Reserved words listed in section ["List of the reserved keywords"](#13-the-list-of-reserved...)
 
 ### 2.2 Rules for Identifier Compilation
 
@@ -672,7 +672,7 @@ The system module has the following functions:
   - Fourth parameter – the name of control device axis as a string constant or an expression that will set the values for robot axis specified in the previous parameter.
   - Fifth and sixth, seventh and eighth, etc. parameters are always set in pairs: robot axis and the source of values for it.
 - *system.send_package* – a command to send the accumulated command package to robots. The only parameter is the flag for the mode of execution of commands from the package, ~ or #. Read more about this function in Section ["Specifying Function Execution Modes"](#6-specifying-function-execution...).
-- *system.mutex_lock* – attempts to lock the mutex by the name specified as a string parameter. If the mutex is free, this function locks it. If the mutex is locked, then function waits its free, and then locks it. More in the section ["Locks"](#10locks).
+- *system.mutex_lock* – attempts to lock the mutex by the name specified as a string parameter. If the mutex is free, this function locks it. If the mutex is locked, then function waits its free, and then locks it. More in the section ["Locks"](#10-locks).
 - *system.mutex_unlock* – frees the mutex by the name specified as a string parameter. If the mutex is already free, the exception is thrown.
 - *system.semaphore_create_lock* - creates a semaphore with the name specified as the first parameter and the number of locks specified in the second parameter. If a semaphore with this name is already created, then function throws an exception.
 - *system.semaphore_wait* – waits for the semaphore to switch until the lock counter is zero. The name of the semaphore is specified as a single string parameter.
@@ -848,7 +848,7 @@ delete @r;
 ```
 It should be noted that all robots involved and not released using delete operator, will be released at the end of the function execution only, where they were engaged. This statement does not apply to robot functions written in *RCML*, because these functions are executed in the context of a robot instance, and a robot instance be engaged in them. Read more about these functions in Section ["Writing Own New Functions for Robots"](#5-writing-own-new-functions-for...). 
 
-**Remember that, by analogy with traditional programming languages where the programmer can allow a memory leak, you can now allow a robot leak in *RCML* **.
+**Remember that, by analogy with traditional programming languages where the programmer can allow a memory leak, you can now allow a robot leak in *RCML*.
 
 [Section "Features of Function Execution by Robots in Different Modes"](#7-features-of-function...) also contains important additional information about the mechanism to release the robot engaged.
 
@@ -1785,7 +1785,7 @@ function main() {
 
 ### 15.3 Working with RCML Dashboard, manual task launch
 
-Example of code for working with *RCML Dashbaord*.
+Example of code for working with *RCML Dashboard*.
 
 ```cpp
 define TASK_PROCESSING 1
@@ -1871,7 +1871,7 @@ The developer documentation contains a description of the API and supporting mat
 
 ### 16.2 Available modules and their API
 
-Part of the open modules developed and supported within the framework of the activities of RCML LLC is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
+Part of the open modules developed and supported within the framework of the activities of *RCML LLC* is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
 
 Description of the API, as well as installation documentation for these modules are available in the [Repository](https://repository.rcml.tech/) service.
 
@@ -1881,7 +1881,7 @@ You can read how to join the *RCML* development community in [repository with co
 
 ### 16.3 Proprietary modules
 
-Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the RCML LLC are prioritized and access to documentation is limited.
+Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the *RCML LLC* are prioritized and access to documentation is limited.
 
 The proprietary modules work only with the industrial version of *RCML*, which requires a commercial license on the industrial equipment.
 
@@ -1917,7 +1917,7 @@ Key might be generated according to the commands on the screenshots below.
 
 ### 17.2 RCML Configuration
 
-The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"](#13rcml)
+The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"](#1-3-installation-and...)
 
 ### 17.3 Collecting of Hardware Information
 
