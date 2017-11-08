@@ -217,7 +217,7 @@ rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debu
 3. Special symbols – symbols that perform specific functions in construction of various language constructs: + - * / = { } ( ) <> , ; : ~ # @ ! "
 4. Composing characters – a group of characters that are seen by the compiler as a unified whole:  ::  ->  ==  >=  <=  !=
 5. “Unused” characters – characters that are not included in the set indicated above, but, nevertheless, can be used in comments or to set values of the constants and strings;
-6. Reserved words listed in section ["List of the reserved keywords"](#12-1)
+6. Reserved words listed in section ["List of the reserved keywords"](#13)
 
 ### 2.2 Rules for Identifier Compilation
 
@@ -870,7 +870,7 @@ In case of using a special variable for communication with the abstract robot, *
 
 In the method of robot activation described in section ["Using Robots in the Program"](#3-2-using-robots-in-the-program), specific physical robot, or rather the associated robot representation is chosen by the robot module, which may know nothing about the context of using the activated robot, and therefore it is likely to make not the best choice of the robot. Most often, the first available robot within a specific module of robots is called this way if a specific required class of robots had been specified. Or, if an abstract robot had been called, it would be the first free robot from the first module of robots with unused robots, in the order in which the modules of the robots are listed in theconfig.ini file.
 
-If in the process of the *RCML* interpreter operation the option to record statistics (see section ["Installation and Configuration of *RCML* Compiler and Interpreter"](#1-3-installation-and...)) was activated, the statistical information about robots operation and the speed of executing their functions is collected. Some modules of robot choise work correctly only with enabled option of statistics recording. For more about data collection, see Section ["Working with *RCML* statistics"](#14-working-with-rcml-statistics). 
+If in the process of the *RCML* interpreter operation the option to record statistics (see section ["Installation and Configuration of *RCML* Compiler and Interpreter"](#1-3-installation-and...)) was activated, the statistical information about robots operation and the speed of executing their functions is collected. Some modules of robot choise work correctly only with enabled option of statistics recording. For example, *avg* module. 
 
 Connecting one or several choosing modules is specified in the robot manipulation the operator in angle brackets <>, where all choosing modules are listed, comma-separated. The syntax of this construction is as follows:
 ```cpp
@@ -1452,10 +1452,21 @@ export function robot_test::user_function(s) {
 	robot->print("Robot Func All right\n", 0);
 }
 ```
-It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#14-additional-information-about...).
+It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#12-additional-information-about...).
 ***
 
-# 12 The List Of Reserved Keywords in RCML
+# 12 Additional Information About Interface Identifiers according to libraries.
+
+A line, placed after the keyword "IID" in *RCML* library code is a unique library interface version identifier, i.e. it can be used to give uniqueness to the library and its particular version.
+
+It is quite possible for different developers to create libraries with the same name. Additionally, the user can rename the libraries included in *RCML* program and then access them in *RCML* environment using new names. Therefore, this unique identifier was introduced in order to use the libraries of *RCML* environment which the program depends on in execution, and which were used by a programmer at compilation stage. It is used to compare the required libraries to execute the program with the existing libraries available.
+
+To make the identifier more unique, it is recommended to specify a unique identifier of the maximum permitted size – 32 symbols.
+
+The unique identifier may to some extent serve as a tool for library developer, pointing *RCML* environment on compatibility of different versions of the library developed. By changing the code without changing this identifier, the developer indicates succession of the new version of the library in relation to the old one, i.e. the new version can be used to execute *RCML* programs compiled with the old version. It is recommended to do this only if library function names are not changed, as well as the number of their parameters and the program behavior executing these functions. Otherwise, it is recommended to specify a new unique interface identifier, to inform *RCML* environment that a new version of the library has significant differences from the old one and behavior of the executed *RCML* program compiled with the old version is not defined for the new version.
+***
+
+# 13 The List Of Reserved Keywords in RCML
 
 | | | | | | |
 |:--|:--|:--|:--|:--|:--|
@@ -1463,7 +1474,7 @@ It should be remembered that inclusion of the library into another program makes
 |exit|export|function|if|IID|include|
 |include_lib|loop|return|robot|throw|try|
 
-# 13 Syntax Map of RCML
+# 14 Syntax Map of RCML
 
 ```cpp
 PROGRAM: IID HEADERS
@@ -1592,32 +1603,265 @@ ARG:    EXPR
 ```
 ***
 
-# 14 Additional Information About Interface Identifiers according to libraries.
+# 15 Tips and tricks
 
-A line, placed after the keyword "IID" in *RCML* library code is a unique library interface version identifier, i.e. it can be used to give uniqueness to the library and its particular version.
+### 15.1 Post-processing
 
-It is quite possible for different developers to create libraries with the same name. Additionally, the user can rename the libraries included in *RCML* program and then access them in *RCML* environment using new names. Therefore, this unique identifier was introduced in order to use the libraries of *RCML* environment which the program depends on in execution, and which were used by a programmer at compilation stage. It is used to compare the required libraries to execute the program with the existing libraries available.
+In the case when the trajectory for robots passes to *RCML* by "hardcode" - the method of post-processing (defines coords of points in the code of the program). For example:
 
-To make the identifier more unique, it is recommended to specify a unique identifier of the maximum permitted size – 32 symbols.
+```cpp
+robot_kuka->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+robot_kuka->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+robot_kuka->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
 
-The unique identifier may to some extent serve as a tool for library developer, pointing *RCML* environment on compatibility of different versions of the library developed. By changing the code without changing this identifier, the developer indicates succession of the new version of the library in relation to the old one, i.e. the new version can be used to execute *RCML* programs compiled with the old version. It is recommended to do this only if library function names are not changed, as well as the number of their parameters and the program behavior executing these functions. Otherwise, it is recommended to specify a new unique interface identifier, to inform *RCML* environment that a new version of the library has significant differences from the old one and behavior of the executed *RCML* program compiled with the old version is not defined for the new version.
-***
+robot_kuka->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+robot_kuka->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+robot_kuka->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
 
-# 15 List of Abbreviations
+robot_kuka->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+robot_kuka->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+robot_kuka->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+```
 
-Below you can find a list of abbreviations used in this manual in the order they are first mentioned in the text:
+Then is recommended to follow the following principles of design and coding of similar programs.
 
-**RCML** – Robot Control Meta Language;
+Even if all actions are performed by one robot, it is better to use a robot variable instead of specifying a robot class on each line:
+```cpp
+@r = robot_kuka;
+@r->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+@r->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
 
-**API** – Application Programming Interface;
+@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+@r->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
 
-**DB** – Database;
+@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+@r->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+@r->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+delete @r;
+```
+This method eliminates unnecessary operations to activate the robot and release it, which is equal to the acceleration of *RCML* operations by 3 times, with the same result.
 
-**SW** – Software;
+In case, when all the points belong in the same trajectory, then it is more expedient to send all the commands to the movement except for the last one in the mode "without waiting for execution" and the last "with the wait of execution":
+```cpp
+@r = robot_kuka;
+~@r->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+~@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~@r->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
 
-**OS** – Operating system;
+~@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~@r->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
 
-**PC** – Pseudo Code.
+~@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~@r->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+#@r->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+delete @r;
+```
+This disables the receipt of confirmation from the robot for intermediate points, which improves performance and reduces the time delays in moving from one point to another.
+
+In the case when the *RCML* program consists only of trajectories obtained by the post-processing, it is recommended to use the `--without-optimization` param when compiling the program. This param disables optimizing the use of memory and processor registers by the *RCML* program, which leads to an insignificant increase in its volume in compiled form and significantly increases the compilation speed (by 72 times).
+
+In case, when some logic is present in the *RCML* program, it is better to move commands of the "hardcoded" points to one or several functions of a separate library, which should be compiled with the `--without-optimization` flag. Include this library to the main program and call its functions in the place where you want to execute the "hardcoded" path. The main program can be compiled as usual, and when changing the "hardcoded" path, only the library should be changed.
+
+```cpp
+// hardcode_lib.rcml
+
+IID "hardcode_lib_v101"
+
+export function robot_kuka::moveByHardcodeTrajectory() {
+~robot->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+~robot->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~robot->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
+
+~robot->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~robot->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~robot->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
+
+~robot->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~robot->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+#robot->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+}
+```
+
+```cpp
+// main.rcml
+
+include_lib hard "hardcode_lib.rcml.pc"
+
+function main() {
+  @r = robot_kuka;
+  @r->moveByHardcodeTrajectory();
+  delete @r;
+}
+```
+
+### 15.2 Event-drived approach
+
+The event-driven approach is not obvious in *RCML*. However it is used in almost all tasks where there is a need for reaction to the occurrence of an event. In this case, there can be many sources of events, as well as handlers to them.
+
+For example: lets we have one robot, one item sensor, that connected to the robot, and one button, that connected to block of signals (DI/DO) by Modbus. The robot should stop working when the button is pressed, and the robot must transfer the item by the signal from the sensor. 
+So, we have 2 types of events: the button pressing and the having item for transfer.
+
+Example of *RCML* code:
+```cpp
+define ON 1
+
+function OnButtonPressed() {
+  robot_kuka->emergencyStop()
+}
+
+function OnButtonUnPressed() {
+  robot_kuka->resetError();
+}
+
+function OnItem() {
+  // request the robot and start moving along a some trajectory
+  @r = robot_kuka;
+  ~@r->jointMove(...);
+  ~@r->jointMove(...);
+  ...
+  ~@r->jointMove(...);
+  @r->jointMove(...);
+  delete @r;
+  
+  // signal that about the item has been moved
+  array.set("isThereItem", 0, 0);
+}
+
+function WaitButtonPress() { // the button event handling
+  // the button event has a higher priority than the item event
+  system.set("priority", 100);
+  
+  old_state = robot_modbus->getDO(5);
+  
+  loop {
+    // check the DO by Modbus, and run the event handler
+    // if the button is pressed / unpressed several times
+    // will run the same number of the events processings, in the same sequence
+    
+    new_state = robot_modbus->getDO(5);
+    
+    if (old_state != new_state) {
+      if (new_state) {
+        // button is pressed
+        ~OnButtonPressed();
+      } else {
+        // button is unpressed
+        ~OnButtonUnPressed();
+      }
+    }
+  }
+}
+
+function WaitItem() { // the item event handling
+  // the handler priority of item is lower than the same to the button
+  system.set("priority", 50);
+  
+  loop {
+    // the global variable "isThereItem" is needed 
+    // to not get several identical events for the appearance of the same item, 
+    // because the handler runs very fast
+  
+    isThereItem = array.get("isThereItem", 1);
+    if ((!isThereItem) && (robot_kuka->getDI(2) = ON)) {
+      array.set(isThereItem, 0, 1);
+      ~OnItem();
+    }
+  }
+}
+
+function main() {
+  // initialize global variables
+  array.create("isThereItem", 1);
+  array.set(isThereItem, 0, 0);
+  
+  // launching event handlers
+  ~WaitButtonPress();
+  ~WaitItem();
+}
+```
+
+### 15.3 Working with RCML Dashboard, manual task launch
+
+Example of code for working with *RCML Dashbaord*.
+
+```cpp
+define TASK_PROCESSING 1
+define TASK_FINISH 2
+define ROBOT_CONNECTED 2
+
+function robot_test,robot_test_2::DoSomething(TaskID) { // performing task
+	// getting task param
+  size = dashboard.GetTaskParam(TaskID, 0);
+  
+	i = 0;
+	RobotID = robot->GetId();
+  
+  // assign task to robot
+	dashboard.SetRobotBusy(RobotID, TaskID);
+	dashboard.SetTaskStatus(TaskID, TASK_PROCESSING);
+	
+  loop{
+		if(i > 100){
+			break;
+		}
+		system.sleep(size * 1000 / 100);
+		dashboard.SetTaskProgerss(TaskID, i);
+		
+		i = i + 1;
+	}
+	dashboard.SetTaskStatus(TaskID, TASK_FINISH);
+	dashboard.SetRobotFree(RobotID);	
+}
+
+function MakeCrankshaft() { // handler of task launch
+	// register task type to Dashboard
+  TaskTypeID = dashboard.RegisterTask("Crankshaft", 1, 0);
+  
+  loop{
+    // waiting of creation these task type
+		TaskID = dashboard.AddTask("", TaskTypeID, 1);
+    // performing task
+		~robot->DoSomething(TaskID);
+	}
+}
+
+function robot_test::GetId() {
+	return array.get("ROBOT_IDS", 0);
+}
+function robot_test_2::GetId() {
+	return array.get("ROBOT_IDS", 1);
+}
+
+function InitRobots() {
+	array.create("ROBOT_IDS", 2);
+	array.set("ROBOT_IDS", 0, dashboard.AddRobot("FANUC_LRMate_200iD"));
+	array.set("ROBOT_IDS", 1, dashboard.AddRobot("KUKA_KR6_Agilus_R900"));
+	
+	dashboard.SetRobotConnectionStatus(array.get("ROBOT_IDS", 0), ROBOT_CONNECTED);
+	dashboard.SetRobotConnectionStatus(array.get("ROBOT_IDS", 1), ROBOT_CONNECTED);
+}
+
+function CreateTasks() {
+	dashboard.CreateTaskType("Crankshaft", 1, 0);
+	dashboard.SetParamName("Crankshaft", 0, "Size");
+	dashboard.SetParamDefaultValue("Crankshaft", 0, 5);
+	dashboard.SetParamMinValue("Crankshaft", 0, 5);
+	dashboard.SetParamMaxValue("Crankshaft", 0, 30);
+}
+
+function main(){
+	InitRobots();
+	CreateTasks();
+	~MakeCrankshaft();
+	
+	loop{
+		system.sleep(100);
+	}
+}
+```
 ***
 
 # 16 Additional RCML Documentation
