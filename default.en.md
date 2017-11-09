@@ -113,7 +113,7 @@ Additionally, the *config.ini* file may contain following sections:
 
 - *[Repository]* - contains only property * URI * in which the Repository address for receiving *RCML* modules is specified (by default *https://repository.rcml.info/api*).
 
-- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#16rcml). Contains the following properties:
+- * [Repository/Deployer] * - contains data for identification in the Repository, filling of this section is necessary only if you use the industrial version of *RCML* or you are *RCML* developer of modules, is more detailed in the section ["Obtaining the license *RCML*"](#17-obtaining-rcml-license). Contains the following properties:
 	- * UserID * - the user login in the Repository;
 	- * Path * - a way to the file of the private key (* \*.key *) which is couple to the public key loaded in a repository.
 
@@ -131,7 +131,7 @@ The files of all supported locales available for download from the appropriate d
 
 [https://sourceforge.net/projects/rcmlang/files/translations/](https://sourceforge.net/projects/rcmlang/files/translations/)
 
-You can learn more about how to add your own locale to *RCML* project in the locales repository webpage:
+You can learn more about how to add your own locale to *RCML* project in the locales repository web page:
 
 [https://github.com/RobotControlTechnologies/RCML_translations](https://github.com/RobotControlTechnologies/RCML_translations)
 
@@ -153,13 +153,13 @@ You can add new features to *RCML* language through function modules that are no
 
 ### 1.6 Details of Control Modules
 
-Modules of this type are used for making decisions about choosing the next robot for performing a particular function. Alternatively, the choice may be based on previously accumulated statistical data about this function, robot, or the program. Using the choosing modules, it is possible to choose the robot by various different algorithms used in the modules. Usually, a separate module is a separate algorithm for choosing the robot.
-
-Without these modules, the robots are chosen at the discretion of robots modules. Read more about the mechanism of choosing the robot in section ["Using the robot choosing module"](#3-7-using-the-robot-choosing...).
+The control modules are used to connect various control devices to the *RCML* environment in order to use these devices in the manual control of robots whose modules provide this capability. This type of module is similar to robot modules in the sense that the API breaks the dependencies between the control device and the robot. Thus, it is possible to control the same robot by different devices, as well as the possibility of using the same control device for different robots. Of course, this also achieves the same effect of hiding the implementation of the communication device control from the environment *RCML* and the ability to connect a variety of control devices.
 
 ### 1.7 Details of Robot Choice Modules
 
-Modules of this type are used for making decision on a choice of the next robot in need for execution of needed function. Choice can be based on the earlier collected statisticall data about the function, robot or program. With use of robot choice modules it is possible to make a choice of robot based on the algorithms supported by conrecte robot. Usually one module represent one algorithm of a choise of the robot.
+Modules of this type are used to decide on the choice of the next robot if you need to perform a particular function. Alternatively, the choice can be based on historical data accumulated earlier, about this function, the robot or the program. Through the selection modules it is possible to select the robot according to the various algorithms incorporated in them (modules). Usually, a separate module represents a separate algorithm for selecting a robot.
+
+Without these modules, robots are selected by robot modules. For more information about the work of the robot selection mechanism in the section ["Using the robot choosing module"](#3-7-using-the-robot-choosing...).
 
 ### 1.8 Compiling and Running RCML Program
 
@@ -185,7 +185,7 @@ rcml_compiler [--version] [--logfile log_file_path] [--without-optimization] <rc
 ```
 - *--version* - shows the current version of the *RCML* compiler, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the compiler shows the information and immediately exits;
 - *--logfile log_file_path* - writes the output of the *RCML* compiler to a file in the *log_file_path* part;
-- *--without-optimization* - turns off optimization of byte code executed by compiler to considerably increase the speed of compiler when uploading a larage amount of dots from CAM envrironment to *RCML* program (postprocessing).
+- *--without-optimization* - turns off optimization of byte code executed by compiler to considerably increase the speed of compiler when uploading a large amount of dots from CAM environment to *RCML* program (postprocessing).
 - *rcml_text_file* is the path to the file with textual representation of the *RCML* program; 
 - *rcml_pc_file* is the path to the file that the compiled program is written to.
 
@@ -194,7 +194,7 @@ The command line of the *RCML* interpreter has the following pattern:
 rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debug] <rcml_pc_file> [rcml_params]
 ```
 - *--version* - shows the current version of the *RCML* interpreter, the list of versions supported by the *API* modules, and the build date. If this flag is specified, the interpreter shows the information and immediately exits;
-- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"] (#163)
+- *--hardware-info* - collection of data about the hardware configuration is necessary for obtaining the license, more information in section ["Collection of the hardware information"](#17-3-collecting-of-hardware...)
 - *--logfile log_file_path* - writes the output of the *RCML* interpreter to a file in the *log_file_path* part;
 - *--debug* - creates a connection to launched *RCML* debugger for debugging and step by step execution of *RCML* programs;
 - *rcml_pc_file* is the path to the file with compiled *RCML* program; and
@@ -217,7 +217,7 @@ rcml_interpreter [--version] [--hardware-info] [--logfile log_file_path] [--debu
 3. Special symbols – symbols that perform specific functions in construction of various language constructs: + - * / = { } ( ) <> , ; : ~ # @ ! "
 4. Composing characters – a group of characters that are seen by the compiler as a unified whole:  ::  ->  ==  >=  <=  !=
 5. “Unused” characters – characters that are not included in the set indicated above, but, nevertheless, can be used in comments or to set values of the constants and strings;
-6. Reserved words listed in section ["List of the reserved keywords"] (#11-1)
+6. Reserved words listed in section ["List of the reserved keywords"](#13-the-list-of-reserved...)
 
 ### 2.2 Rules for Identifier Compilation
 
@@ -253,7 +253,7 @@ Section of inclusions always goes before the section of functions. Other *RCML* 
 
 The section of functions starts after the first mention of function keyword. Main program code is specified in the section of functions, which consists of functions. 
 
-By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"] (#10rcml)
+By analogy with *C* and *C++* programming languages, execution begins with a function named *main*, which must be present. This statement refers to executable *RCML* programs (not libraries). More information about libraries available in section ["Creation of libraries files"](#11-creating-rcml-library-file)
 
 ### 2.4 Inclusion of Additional RCML Files into the Program
 
@@ -301,7 +301,7 @@ function main() {
 	system.echo("\n1 + 2 =",s,"\n");
 }
 ```
-The process of creating the library is described in Section ["Creating *RCML* Library File"](#10-creating-rcml-library-file).
+The process of creating the library is described in Section ["Creating *RCML* Library File"](#11-creating-rcml-library-file).
 
 Library file search process by the compiler is similar to the search of the file to be included. However, the library code is not included into the executable program code. A link to the library file is created in the executable program, and running such a program will also require the file of the library compiled, as in case of compilation.
 
@@ -502,7 +502,7 @@ return; // function exit without expression return
 ```
 If a *return* operator is specified in the *main* function, its implementation will lead to termination of the *RCML* program, and the value passed via this operator will be passed to the OS as the program exit status. However, the passed value will be rounded to integer by dropping the fraction part.
 
-The operator exiting the program – *exit*. When it is reached, the program stops executiong regardless of function where it is specified. This operator (like *return*) may be called both with an expression, and without it. In the first case, the result of the expression is returned to the OS as the exit code of the program, in the second case the exit code of the program is considered to be equal to 0.
+The operator exiting the program – *exit*. When it is reached, the program stops execution regardless of function where it is specified. This operator (like *return*) may be called both with an expression, and without it. In the first case, the result of the expression is returned to the OS as the exit code of the program, in the second case the exit code of the program is considered to be equal to 0.
 
 The syntax of exit operator with expression return:
 ```cpp
@@ -663,7 +663,7 @@ The system module has the following functions:
 - *system.echo* – a function of data output transferred as arguments to the standard output. It can have any variable number of parameters including the numbers and string constants.
 - *system.set*  – a function of change in *RCML* environment system parameters. It has two arguments: the name of a system parameter and its new value. The name of a system parameter is defined by a string constant, and the new value of this parameter depends on the system parameter specified. Now there is only one system parameter in *RCML* environment:
   - *"behavior"* – function execution behavior by default. The second parameter is the mode flag, character ~ or #. See Section ["Batch Data Transmission to Robots"](#8-batch-data-transmission-to...) for details about execution modes.
-  - *"priority"* - a priority of robots usage in current function. The second parameter of a fuction is a real number, the bigger the value the higher priority of a function in case of robot usage.
+  - *"priority"* - a priority of robots usage in current function. The second parameter of a function is a real number, the bigger the value the higher priority of a function in case of robot usage.
 - *system.sleep* – a temporary pause in the program execution process. It has one numeric parameter – the pause time in milliseconds.
 - *system.hand_control* – enabling manual control for a robot. This function transfers the robot in hand control mode by the said control module. Execution of the main program for the period of hand control is suspended. This function has a variable number of parameters:
   - First parameter – a special variable associated with the appropriate physical robot. Mandatory parameter;
@@ -672,6 +672,11 @@ The system module has the following functions:
   - Fourth parameter – the name of control device axis as a string constant or an expression that will set the values for robot axis specified in the previous parameter.
   - Fifth and sixth, seventh and eighth, etc. parameters are always set in pairs: robot axis and the source of values for it.
 - *system.send_package* – a command to send the accumulated command package to robots. The only parameter is the flag for the mode of execution of commands from the package, ~ or #. Read more about this function in Section ["Specifying Function Execution Modes"](#6-specifying-function-execution...).
+- *system.mutex_lock* – attempts to lock the mutex by the name specified as a string parameter. If the mutex is free, this function locks it. If the mutex is locked, then function waits its free, and then locks it. More in the section ["Locks"](#10-locks).
+- *system.mutex_unlock* – frees the mutex by the name specified as a string parameter. If the mutex is already free, the exception is thrown.
+- *system.semaphore_create_lock* - creates a semaphore with the name specified as the first parameter and the number of locks specified in the second parameter. If a semaphore with this name is already created, then function throws an exception.
+- *system.semaphore_wait* – waits for the semaphore to switch until the lock counter is zero. The name of the semaphore is specified as a single string parameter.
+- *system.semaphore_unlock* – reduces the lock counter of semaphore by 1, takes one string parameter - the name of the semaphore.
 
 ### 2.16 Macros
 
@@ -843,7 +848,7 @@ delete @r;
 ```
 It should be noted that all robots involved and not released using delete operator, will be released at the end of the function execution only, where they were engaged. This statement does not apply to robot functions written in *RCML*, because these functions are executed in the context of a robot instance, and a robot instance be engaged in them. Read more about these functions in Section ["Writing Own New Functions for Robots"](#5-writing-own-new-functions-for...). 
 
-**Remember that, by analogy with traditional programming languages where the programmer can allow a memory leak, you can now allow a robot leak in *RCML* **.
+**Remember that, by analogy with traditional programming languages where the programmer can allow a memory leak, you can now allow a robot leak in *RCML*.
 
 [Section "Features of Function Execution by Robots in Different Modes"](#7-features-of-function...) also contains important additional information about the mechanism to release the robot engaged.
 
@@ -865,7 +870,7 @@ In case of using a special variable for communication with the abstract robot, *
 
 In the method of robot activation described in section ["Using Robots in the Program"](#3-2-using-robots-in-the-program), specific physical robot, or rather the associated robot representation is chosen by the robot module, which may know nothing about the context of using the activated robot, and therefore it is likely to make not the best choice of the robot. Most often, the first available robot within a specific module of robots is called this way if a specific required class of robots had been specified. Or, if an abstract robot had been called, it would be the first free robot from the first module of robots with unused robots, in the order in which the modules of the robots are listed in theconfig.ini file.
 
-If in the process of the *RCML* interpreter operation the option to record statistics (see section ["Installation and Configuration of *RCML* Compiler and Interpreter"](#1-3-installation-and...)) was activated, the statistical information about robots operation and the speed of executing their functions is collected. Some modules of robot choise work correctly only with enabled option of statistics recording. For more about data collection, see Section ["Working with *RCML* statistics"](#14-working-with-rcml-statistics). 
+If in the process of the *RCML* interpreter operation the option to record statistics (see section ["Installation and Configuration of *RCML* Compiler and Interpreter"](#1-3-installation-and...)) was activated, the statistical information about robots operation and the speed of executing their functions is collected. Some modules of robot choise work correctly only with enabled option of statistics recording. For example, *avg* module. 
 
 Connecting one or several choosing modules is specified in the robot manipulation the operator in angle brackets <>, where all choosing modules are listed, comma-separated. The syntax of this construction is as follows:
 ```cpp
@@ -951,7 +956,7 @@ In this case, the path selection algorithm is required for the robot, which shou
 
 # 5 Writing Own New Functions for Robots
 
-Writing own functions for the existing robots is one of the features of *RCML* language. However, it should be noted that according to the canons of programming, new functions should be based on those provided by robot developer through robot module for *RCML* language. This feature is very useful for standardizing names and parameters of the same functions and robots for its subsequent use through the abstract robot. And if robot developer foreseeingly left the access to low-level functions of the robot through robot module, it is possible to expand high-level robot functionality.
+Writing own functions for the existing robots is one of the features of *RCML* language. However, it should be noted that according to the canons of programming, new functions should be based on those provided by robot developer through robot module for *RCML* language. This feature is very useful for standardizing names and parameters of the same functions and robots for its subsequent use through the abstract robot. And if robot developer prudently left the access to low-level functions of the robot through robot module, it is possible to expand high-level robot functionality.
 
 ### 5.1 Writing Functions for a Certain Robot Class
 
@@ -1244,9 +1249,172 @@ Data may be passed from *RCML* to the OS in two ways:
 It occurs by throwing an exception without catching it up to the top level, i.e., before and including the *main* function. In this case the *RCML* program will terminate with code 1, and the value of the exception will not be passed. The mechanism of processing and passing exceptions is discussed in more details in Section ["Exceptions"](#2-13-exceptions).
 ***
 
-# 10 Creating RCML Library File
+# 10 Locks
 
-Libraries in *RCML* are analogues of dynamically connected libraries into modern programming tools and use for reusing the same code in different *RCML* programs. Libraries are the ladders of compiled *RCML* programs, i.e. containing only the compiled binary bytecode, without giving access to its source code.
+*RCML* implemented a locking mechanism to control the process of parallel execution that can affect the same objects.
+
+The simplest example of the need for locking, when two or more independent robots take or bring some details to the same place. Necessary to prohibit several robots from entering the given common space zone simultaneously to prevent a collision of these robots.
+
+Two concepts are used to manage locks in *RCML*: mutexes and semaphores.
+
+### 10.1 Mutexes
+
+Mutex is a mechanism that restricts the operation of several functions (threads) running concurrently over one section of the code.
+
+Some of the problems that mutexes can solve:
+- prohibition of simultaneous execution of specific code sections (critical sections);
+- access to a critical resource by turns (for an important resource for which simultaneous access is not possible (or undesirable));
+- synchronization of processes and threads (for example, you can initiate event processing by unlocks a mutex).
+
+This mechanism is may used for the following tasks in the approach for programming robots:
+- prohibiting the entry of several robots into the same zone;
+- access to the work area by turns, for example, for taking or dropping a part;
+- a message from one robot to another that it's about doing something.
+
+The mutex has a unique name and can be in only two states: locked or free. A previously locked mutex can not be locked again. Thus, execution of all code sections that try to work with the same mutex is suspended until the mutex is available.
+
+The mutex lock is performed by the system function *system.mutex_lock*. It has only one parameter - the name of the mutex (string). If a mutex with this name already exists, execution of this section of code will be suspended until the mutex is unlocked.
+
+Call the system function *system.mutex_unlock* to unlock the mutex. It has only one parameter - the name of the mutex. After unlocking the mutex, it becomes free to re-lock and only one of the pending executions can lock it.
+
+**The order is random for locking the mutex by the pending executions.**
+
+Example of using mutexes:
+```cpp
+@r = robot_builder;
+
+@r->movingToStorage();
+
+system.mutex_lock("storage_zone");
+// code that should be executed by only one robot at the moment
+@r->enterStorageZone();
+@r->gripperClose();
+@r->leaveStorageZone();
+system.mutex_unlock("storage_zone");
+
+@r->movingToBuilding();
+
+system.mutex_lock("build_zone");
+@r->enterBuildZone();
+@r->gripperOpen();
+@r->leaveBuildZone();
+system.mutex_unlock("build_zone");
+
+delete @r;
+```
+
+In this example, critical sections are created by using the mutexes. Critical sections is sections of code, that can be executed by only one execution at a given time. When creating critical sections, it is recommended to minimize the code falling into the critical section and to free the mutex in the same function in which it was locked.
+
+### 10.2 Semaphores
+
+In *RCML*, the semaphore is a mechanism for generating events from one or more sources to one or more recipients.
+
+The semaphore also has a unique name, but unlike the mutex it has a lock count. Call the system function *system.semaphore_create_lock* to create a semaphore. It has two parameters:
+- the name of the semaphore - a string;
+- number of locks - number - how many times the semaphore should be freed before it create the event.
+
+If a semaphore with this name is already created, an exception will be thrown. The semaphore will exist until the number of locks is greater than zero.
+
+Waiting for the semaphore to be freed is via the *system.semaphore_wait* function. The name of the waited semaphore need specified as a single string parameter. When the number of locks reaches zero, execution continues with this function, before that the current thread will be in sleep state.
+
+Each unlock of the semaphore reduces the number of locks by 1. The semaphore is freed by the function *system.semaphore_unlock*. The parameter of this function specifies the name of the semaphore.
+
+if the semaphore by the specified name does not exist, then the functions *system.semaphore_wait* and *system.semaphore_unlock* throw an exception.
+
+Example of creating an event from set to one:
+```cpp
+function mountBlock(level_num) {
+  r = robot_builder;
+
+  @r->movingToStorage();
+
+  system.mutex_lock("storage_zone");
+  @r->enterStorageZone();
+  @r->gripperClose();
+  @r->leaveStorageZone();
+  system.mutex_unlock("storage_zone");
+
+  @r->movingToBuilding();
+
+  system.mutex_lock("build_zone");
+  @r->enterBuildZone(level_num);
+  @r->gripperOpen();
+  @r->leaveBuildZone(level_num);
+  system.mutex_unlock("build_zone");
+
+  delete @r;
+  
+  system.semaphore_unlock("level_done");
+}
+
+function main() {
+  
+  // build 3 levels of three blocks
+  
+  system.semaphore_create_lock("level_done", 3);
+  // installation of blocks is executed in parallel
+  ~mountBlock(1);
+  ~mountBlock(1);
+  ~mountBlock(1);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the first level is ready!
+  
+  system.semaphore_create_lock("level_done", 3);
+  ~mountBlock(2);
+  ~mountBlock(2);
+  ~mountBlock(2);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the second level is ready!
+
+  system.semaphore_create_lock("level_done", 3);
+  ~mountBlock(3);
+  ~mountBlock(3);
+  ~mountBlock(3);
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the third level is ready!
+}
+```
+
+In this example, the main function waits for the child functions to complete the installation of blocks by control a number of robots. The construction of the next level is carried out only after the completion of the previous one.
+
+An example of creating an event from one thread to a set. Let's add the possibility of simultaneously start building to the previous example:
+
+```cpp
+function mountBlock(level_num) {
+  system.semaphore_wait("start_work");
+  
+  ...
+}
+
+function main() {
+  
+  // build 3 levels of three blocks
+  
+  system.semaphore_create_lock("start_work", 1);
+  system.semaphore_create_lock("level_done", 3);
+  // installation of blocks is executed in parallel
+  ~mountBlock(1);
+  ~mountBlock(1);
+  ~mountBlock(1);
+  
+  // give a signal to start
+  system.semaphore_unlock("start_work", 1);
+  
+  // waited until all three units are installed
+  system.semaphore_wait("level_done");
+  // the first level is ready!
+  
+  ...
+}
+```
+***
+
+# 11 Creating RCML Library File
+
+Libraries in *RCML* are analogues of dynamically connected libraries into modern programming tools and use for reusing the same code in different *RCML* programs. Libraries are the ladders of compiled *RCML* programs, i.e. containing only the compiled binary byte code, without giving access to its source code.
 
 The following nomenclature of description of file to be created shall be used to create a library.
 
@@ -1284,10 +1452,21 @@ export function robot_test::user_function(s) {
 	robot->print("Robot Func All right\n", 0);
 }
 ```
-It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#13-additional-information-about...).
+It should be remembered that inclusion of the library into another program makes this program dependent on all modules and other libraries used in that library. I.e., to execute such a program, the interpreter requires modules and libraries with the same IID, which were used in its (program) compilation. Dependence on IID is not dependence on a particular module or library file. Library or module can be changed, improved or worsened, but if a set of functions and their parameters exported to *RCML* environment (i.e. IID) remained unchanged, such library is considered to be equal to the original one. Read more about IID mechanism in Section ["Additional Information About Interface Identifiers"](#12-additional-information-about...).
 ***
 
-# 11 The List Of Reserved Keywords in RCML
+# 12 Additional Information About Interface Identifiers according to libraries.
+
+A line, placed after the keyword "IID" in *RCML* library code is a unique library interface version identifier, i.e. it can be used to give uniqueness to the library and its particular version.
+
+It is quite possible for different developers to create libraries with the same name. Additionally, the user can rename the libraries included in *RCML* program and then access them in *RCML* environment using new names. Therefore, this unique identifier was introduced in order to use the libraries of *RCML* environment which the program depends on in execution, and which were used by a programmer at compilation stage. It is used to compare the required libraries to execute the program with the existing libraries available.
+
+To make the identifier more unique, it is recommended to specify a unique identifier of the maximum permitted size – 32 symbols.
+
+The unique identifier may to some extent serve as a tool for library developer, pointing *RCML* environment on compatibility of different versions of the library developed. By changing the code without changing this identifier, the developer indicates succession of the new version of the library in relation to the old one, i.e. the new version can be used to execute *RCML* programs compiled with the old version. It is recommended to do this only if library function names are not changed, as well as the number of their parameters and the program behavior executing these functions. Otherwise, it is recommended to specify a new unique interface identifier, to inform *RCML* environment that a new version of the library has significant differences from the old one and behavior of the executed *RCML* program compiled with the old version is not defined for the new version.
+***
+
+# 13 The List Of Reserved Keywords in RCML
 
 | | | | | | |
 |:--|:--|:--|:--|:--|:--|
@@ -1295,7 +1474,8 @@ It should be remembered that inclusion of the library into another program makes
 |exit|export|function|if|IID|include|
 |include_lib|loop|return|robot|throw|try|
 
-# 12 Syntax Map of RCML
+# 14 Syntax Map of RCML
+
 ```cpp
 PROGRAM: IID HEADERS
 
@@ -1423,42 +1603,275 @@ ARG:    EXPR
 ```
 ***
 
-# 13 Additional Information About Interface Identifiers according to libraries.
+# 15 Tips and tricks
 
-A line, placed after the keyword "IID" in *RCML* library code is a unique library interface version identifier, i.e. it can be used to give uniqueness to the library and its particular version.
+### 15.1 Post-processing
 
-It is quite possible for different developers to create libraries with the same name. Additionally, the user can rename the libraries included in *RCML* program and then access them in *RCML* environment using new names. Therefore, this unique identifier was introduced in order to use the libraries of *RCML* environment which the program depends on in execution, and which were used by a programmer at compilation stage. It is used to compare the required libraries to execute the program with the existing libraries available.
+In the case when the trajectory for robots passes to *RCML* by "hardcode" - the method of post-processing (defines coords of points in the code of the program). For example:
 
-To make the identifier more unique, it is recommended to specify a unique identifier of the maximum permitted size – 32 symbols.
+```cpp
+robot_kuka->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+robot_kuka->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+robot_kuka->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
 
-The unique identifier may to some extent serve as a tool for library developer, pointing *RCML* environment on compatibility of different versions of the library developed. By changing the code without changing this identifier, the developer indicates succession of the new version of the library in relation to the old one, i.e. the new version can be used to execute *RCML* programs compiled with the old version. It is recommended to do this only if library function names are not changed, as well as the number of their parameters and the program behavior executing these functions. Otherwise, it is recommended to specify a new unique interface identifier, to inform *RCML* environment that a new version of the library has significant differences from the old one and behavior of the executed *RCML* program compiled with the old version is not defined for the new version.
+robot_kuka->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+robot_kuka->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+robot_kuka->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
+
+robot_kuka->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+robot_kuka->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+robot_kuka->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+```
+
+Then is recommended to follow the following principles of design and coding of similar programs.
+
+Even if all actions are performed by one robot, it is better to use a robot variable instead of specifying a robot class on each line:
+```cpp
+@r = robot_kuka;
+@r->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+@r->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
+
+@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+@r->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
+
+@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+@r->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+@r->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+delete @r;
+```
+This method eliminates unnecessary operations to activate the robot and release it, which is equal to the acceleration of *RCML* operations by 3 times, with the same result.
+
+In case, when all the points belong in the same trajectory, then it is more expedient to send all the commands to the movement except for the last one in the mode "without waiting for execution" and the last "with the wait of execution":
+```cpp
+@r = robot_kuka;
+~@r->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+~@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~@r->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
+
+~@r->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~@r->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
+
+~@r->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~@r->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+#@r->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+delete @r;
+```
+This disables the receipt of confirmation from the robot for intermediate points, which improves performance and reduces the time delays in moving from one point to another.
+
+In the case when the *RCML* program consists only of trajectories obtained by the post-processing, it is recommended to use the `--without-optimization` param when compiling the program. This param disables optimizing the use of memory and processor registers by the *RCML* program, which leads to an insignificant increase in its volume in compiled form and significantly increases the compilation speed (by 72 times).
+
+In case, when some logic is present in the *RCML* program, it is better to move commands of the "hardcoded" points to one or several functions of a separate library, which should be compiled with the `--without-optimization` flag. Include this library to the main program and call its functions in the place where you want to execute the "hardcoded" path. The main program can be compiled as usual, and when changing the "hardcoded" path, only the library should be changed.
+
+```cpp
+// hardcode_lib.rcml
+
+IID "hardcode_lib_v101"
+
+export function robot_kuka::moveByHardcodeTrajectory() {
+~robot->linearMove(-46.18419, -6.77518, -20.54925, 71.38674, 49.58727, -302.54752);
+~robot->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~robot->linearMove(-43.73892, -3.91728, -35.77935, 58.57566, 54.11615, -253.81122);
+
+~robot->linearMove(-41.62707, -8.89064, -30.01809, 60.62329, 49.66749, -258.98418);
+~robot->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~robot->linearMove(-39.75778, -1.04537, -40.37883, 52.09118, 54.15317, -246.94403);
+
+~robot->linearMove(-37.52588, -6.32628, -34.59693, 53.52525, 49.24426, -251.44677);
+~robot->linearMove(-41.85389, -1.95619, -34.89154, 57.43912, 52.34162, -253.73403);
+#robot->linearMove(-43.82111, 3.29703, -40.29493, 56.02402, 56.61169, -249.23532);
+}
+```
+
+```cpp
+// main.rcml
+
+include_lib hard "hardcode_lib.rcml.pc"
+
+function main() {
+  @r = robot_kuka;
+  @r->moveByHardcodeTrajectory();
+  delete @r;
+}
+```
+
+### 15.2 Event-drived approach
+
+The event-driven approach is not obvious in *RCML*. However it is used in almost all tasks where there is a need for reaction to the occurrence of an event. In this case, there can be many sources of events, as well as handlers to them.
+
+For example: lets we have one robot, one item sensor, that connected to the robot, and one button, that connected to block of signals (DI/DO) by Modbus. The robot should stop working when the button is pressed, and the robot must transfer the item by the signal from the sensor. 
+So, we have 2 types of events: the button pressing and the having item for transfer.
+
+Example of *RCML* code:
+```cpp
+define ON 1
+
+function OnButtonPressed() {
+  robot_kuka->emergencyStop()
+}
+
+function OnButtonUnPressed() {
+  robot_kuka->resetError();
+}
+
+function OnItem() {
+  // request the robot and start moving along a some trajectory
+  @r = robot_kuka;
+  ~@r->jointMove(...);
+  ~@r->jointMove(...);
+  ...
+  ~@r->jointMove(...);
+  @r->jointMove(...);
+  delete @r;
+  
+  // signal that about the item has been moved
+  array.set("isThereItem", 0, 0);
+}
+
+function WaitButtonPress() { // the button event handling
+  // the button event has a higher priority than the item event
+  system.set("priority", 100);
+  
+  old_state = robot_modbus->getDO(5);
+  
+  loop {
+    // check the DO by Modbus, and run the event handler
+    // if the button is pressed / unpressed several times
+    // will run the same number of the events processings, in the same sequence
+    
+    new_state = robot_modbus->getDO(5);
+    
+    if (old_state != new_state) {
+      if (new_state) {
+        // button is pressed
+        ~OnButtonPressed();
+      } else {
+        // button is unpressed
+        ~OnButtonUnPressed();
+      }
+    }
+  }
+}
+
+function WaitItem() { // the item event handling
+  // the handler priority of item is lower than the same to the button
+  system.set("priority", 50);
+  
+  loop {
+    // the global variable "isThereItem" is needed 
+    // to not get several identical events for the appearance of the same item, 
+    // because the handler runs very fast
+  
+    isThereItem = array.get("isThereItem", 1);
+    if ((!isThereItem) && (robot_kuka->getDI(2) = ON)) {
+      array.set(isThereItem, 0, 1);
+      ~OnItem();
+    }
+  }
+}
+
+function main() {
+  // initialize global variables
+  array.create("isThereItem", 1);
+  array.set(isThereItem, 0, 0);
+  
+  // launching event handlers
+  ~WaitButtonPress();
+  ~WaitItem();
+}
+```
+
+### 15.3 Working with RCML Dashboard, manual task launch
+
+Example of code for working with *RCML Dashboard*.
+
+```cpp
+define TASK_PROCESSING 1
+define TASK_FINISH 2
+define ROBOT_CONNECTED 2
+
+function robot_test,robot_test_2::DoSomething(TaskID) { // performing task
+	// getting task param
+  size = dashboard.GetTaskParam(TaskID, 0);
+  
+	i = 0;
+	RobotID = robot->GetId();
+  
+  // assign task to robot
+	dashboard.SetRobotBusy(RobotID, TaskID);
+	dashboard.SetTaskStatus(TaskID, TASK_PROCESSING);
+	
+  loop{
+		if(i > 100){
+			break;
+		}
+		system.sleep(size * 1000 / 100);
+		dashboard.SetTaskProgerss(TaskID, i);
+		
+		i = i + 1;
+	}
+	dashboard.SetTaskStatus(TaskID, TASK_FINISH);
+	dashboard.SetRobotFree(RobotID);	
+}
+
+function MakeCrankshaft() { // handler of task launch
+	// register task type to Dashboard
+  TaskTypeID = dashboard.RegisterTask("Crankshaft", 1, 0);
+  
+  loop{
+    // waiting of creation these task type
+		TaskID = dashboard.AddTask("", TaskTypeID, 1);
+    // performing task
+		~robot->DoSomething(TaskID);
+	}
+}
+
+function robot_test::GetId() {
+	return array.get("ROBOT_IDS", 0);
+}
+function robot_test_2::GetId() {
+	return array.get("ROBOT_IDS", 1);
+}
+
+function InitRobots() {
+	array.create("ROBOT_IDS", 2);
+	array.set("ROBOT_IDS", 0, dashboard.AddRobot("FANUC_LRMate_200iD"));
+	array.set("ROBOT_IDS", 1, dashboard.AddRobot("KUKA_KR6_Agilus_R900"));
+	
+	dashboard.SetRobotConnectionStatus(array.get("ROBOT_IDS", 0), ROBOT_CONNECTED);
+	dashboard.SetRobotConnectionStatus(array.get("ROBOT_IDS", 1), ROBOT_CONNECTED);
+}
+
+function CreateTasks() {
+	dashboard.CreateTaskType("Crankshaft", 1, 0);
+	dashboard.SetParamName("Crankshaft", 0, "Size");
+	dashboard.SetParamDefaultValue("Crankshaft", 0, 5);
+	dashboard.SetParamMinValue("Crankshaft", 0, 5);
+	dashboard.SetParamMaxValue("Crankshaft", 0, 30);
+}
+
+function main(){
+	InitRobots();
+	CreateTasks();
+	~MakeCrankshaft();
+	
+	loop{
+		system.sleep(100);
+	}
+}
+```
 ***
 
-# 14 List of Abbreviations
+# 16 Additional RCML Documentation
+### 16.1 Documentation for Developers
 
-Below you can find a list of abbreviations used in this manual in the order they are first mentioned in the text:
+The developer documentation contains a description of the API and supporting material that developers might use to write their own *RCML* modules. This documentation is available in a [developer's repository](https://github.com/rcml-tech/RCML_docs_developer)
 
-**RCML** – Robot Control Meta Language;
+### 16.2 Available modules and their API
 
-**API** – Application Programming Interface;
-
-**DB** – Database;
-
-**SW** – Software;
-
-**OS** – Operating system;
-
-**PC** – Pseudo Code.
-***
-
-# 15 Additional RCML Documentation
-### 15.1 Documentation for Developers
-
-The developer documentaion contains a description of the API and supporting material that developers might use to write their own *RCML* modules. This documentaton is available in a [developer's repository](https://github.com/rcml-tech/RCML_docs_developer)
-
-### 15.2 Available modules and their API
-
-Part of the open modules developed and supported within the framework of the activities of RCML LLC is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
+Part of the open modules developed and supported within the framework of the activities of *RCML LLC* is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
 
 Description of the API, as well as installation documentation for these modules are available in the [Repository](https://repository.rcml.tech/) service.
 
@@ -1466,11 +1879,11 @@ Modules developed by the *RCML* community, as well as documentation for them, ca
 
 You can read how to join the *RCML* development community in [repository with community memorandum](https://github.com/rcml-tech/community_RULES).
 
-### 15.3 Proprietary modules
+### 16.3 Proprietary modules
 
-Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the RCML LLC are prioritized and access to documentation is limited.
+Some modules for connection of industrial equipment (robots and controllers) to *RCML* developed within the framework of the *RCML LLC* are prioritized and access to documentation is limited.
 
-The proprietary modules work only with the industrial version of *RCML*, which requires a commertial license on the industrial equipment.
+The proprietary modules work only with the industrial version of *RCML*, which requires a commercial license on the industrial equipment.
 
 List of available proprietary modules:
 
@@ -1481,10 +1894,10 @@ List of available proprietary modules:
 
 Access to proprietary modules is granted to customers of *RCML LLC* or on request, on an individual basis. The request in free form can be sent to `license@rcml.tech`
 
-# 16 Obtaining RCML License
-### 16.1 User registration in Repository
+# 17 Obtaining RCML License
+### 17.1 User registration in Repository
 
-Create your own account on Repository service webpage [Repository](https://repository.rcml.info/#/sign-up)
+Create your own account on Repository service web page [Repository](https://repository.rcml.info/#/sign-up)
 
 ![](images/02.png)
 
@@ -1502,11 +1915,11 @@ Key might be generated according to the commands on the screenshots below.
 
 ![](images/06.png)
 
-### 16.2 RCML Configuration
+### 17.2 RCML Configuration
 
-The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"] (#13rcml)
+The user name and private key obtained during the registration must be specified in *RCML*, more information available in section ["Installing and Configuring the *RCML* Compiler and Interpreter"](#1-3-installation-and...)
 
-### 16.3 Collecting of Hardware Information
+### 17.3 Collecting of Hardware Information
 
 If you get a license for commercial use of *RCML* please make sure that you have successfully filled in the following terms:
 
@@ -1520,16 +1933,16 @@ If you get a license for commercial use of *RCML* please make sure that you have
 	- Connected to the local network;
 	- Switched to auto-mode (acknowledgment of security system warnings has been performed).
 	
-On every PC or Controller run the following command in the console: `rcml_intepreter - hardware-info`
+On every PC or Controller run the following command in the console: `rcml_intepreter --hardware-info`
 
 ![](images/07.png)
 
 A `hardwareInfo.json` file will be generated. This file contains information about the hardware configuration and the connected industrial robots.
 
-### 16.4 Sending hardware configuration
+### 17.4 Sending hardware configuration
 
-Repeat steps 18.2 and 18.3 on all PCs and controllers which requires a license.
+Repeat steps 17.2 and 17.3 on all PCs and controllers which requires a license.
 
-Send all `hardwareInfo.json` files to the following e-mail address `license @ rcml.tech`.
+Send all `hardwareInfo.json` files to the following e-mail address `license@rcml.tech`.
 
 License key for your PCs and controllers will be send back from the same e-mail address.
