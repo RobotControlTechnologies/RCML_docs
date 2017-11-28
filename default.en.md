@@ -10,9 +10,9 @@ title: 'RCML Documentation'
 
 [RCML Quick Start for Linux](https://youtu.be/AdjV8Ruke_Y)
 
-Go to *SourceForge* project page at:
+Go to project page at:
 
-[http://sourceforge.net/projects/rcmlang/files/](http://sourceforge.net/projects/rcmlang/files/)
+[https://rcml.tech/downloads](https://rcml.tech/downloads)
 
 From the folder of your OS, download the archive with files of *rcml_build_X.zip* compiler and the archive with files of *rcml_modules_build_X.zip* modules, where *X* is compiler version. Versions of these archives must be the same.
 
@@ -74,9 +74,9 @@ The immediate program execution is performed by *RCML* language interpreter, as 
 
 ### 1.3 Installation and Configuration of RCML Compiler and Interpreter
 
-The compiler and interpreter are available for downloading from the *SourceForge* project page:
+The compiler and interpreter are available for downloading from the project page:
 
-[http://sourceforge.net/projects/rcmlang/files/](http://sourceforge.net/projects/rcmlang/files/)
+[https://rcml.tech/downloads](https://rcml.tech/downloads)
 
 The compiler and interpreter are two executable files that used to be put into the same folder. Additionally, in the folder you will have to create a text file *config.ini*, which is the *RCML* environment configuration file. The configuration is the same for the compiler and the interpreter.
 
@@ -1871,7 +1871,7 @@ The developer documentation contains a description of the API and supporting mat
 
 ### 16.2 Available modules and their API
 
-Part of the open modules developed and supported within the framework of the activities of *RCML LLC* is available on the official *RCML* binary files download page on [SourceForge](https://sourceforge.net/projects/rcmlang/).
+Part of the open modules developed and supported within the framework of the activities of *RCML LLC* is available on the official *RCML* binary files download page on [https://rcml.tech/downloads](https://rcml.tech/downloads).
 
 Description of the API, as well as installation documentation for these modules are available in the [Repository](https://repository.rcml.tech/) service.
 
