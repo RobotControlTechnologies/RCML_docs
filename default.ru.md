@@ -10,9 +10,9 @@ title: 'Документация на RCML'
 
 [Видео-руководство по быстрому старту RCML для Linux](https://youtu.be/AdjV8Ruke_Y)
 
-Перейдите на страницу проекта на SourceForge по ссылке:
+Перейдите на страницу проекта по ссылке:
 
-[http://sourceforge.net/projects/rcmlang/files/](http://sourceforge.net/projects/rcmlang/files/)
+[https://rcml.tech/downloads](https://rcml.tech/downloads)
 
 Из папки нужной Вам ОС скачайте архив с файлами компилятора *rcml_build_X.zip* и архив с файлами модулей *rcml_modules_build_X.zip*, где X – версия компилятора. Для этих двух архивов версии должны совпадать.
 
@@ -74,9 +74,9 @@ rcml_intepreter.exe hello.rcml
 
 ### 1.3 Установка и настройка компилятора и интерпретатора RCML
 
-Компилятор и интерпретатор можно скачать со страницы проекта на *SourceForge*:
+Компилятор и интерпретатор можно скачать со страницы проекта по ссылке:
 
-[http://sourceforge.net/projects/rcmlang/files/](http://sourceforge.net/projects/rcmlang/files/)
+[https://rcml.tech/downloads](https://rcml.tech/downloads)
 
 Компилятор и интерпретатор представляют собой два исполняемых файла, которые необходимо поместить в одну папку. Дополнительно в данной папке требуется создать текстовый файл *config.ini*, это конфигурационный файл среды *RCML*. Конфигурация едина для компилятора и интерпретатора.
 
@@ -1870,7 +1870,7 @@ function main(){
 
 ### 16.2 Доступные модули и их API
 
-Часть открытых модулей разрабатываемых и поддерживаемых в рамках деятельности ООО "РСМЛ" (RCML LLC) доступна на оффициальной странице загрузки бинарных файлов *RCML* на [SourceForge](https://sourceforge.net/projects/rcmlang/).
+Часть открытых модулей разрабатываемых и поддерживаемых в рамках деятельности ООО "РСМЛ" (RCML LLC) доступна на оффициальной странице загрузки бинарных файлов *RCML* на [https://rcml.tech/downloads](https://rcml.tech/downloads).
 
 Описание API, а также документация по установке, для данных модулей доступны в сервисе [Репозиторий](https://repository.rcml.tech/).
 
