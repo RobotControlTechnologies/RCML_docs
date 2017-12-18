@@ -954,7 +954,7 @@ Additionally, selection of such axes of motion for the robot leads to uncertaint
 In this case, the path selection algorithm is required for the robot, which should be executed whenever a new axis value is received, and each time consuming portion of the CPU time, increasing the robot response speed.
 
 ### 4.4 Exit from Hand Control Mode
-For exit from Hand Control Mode and continue program exist binary axis *exit*. When transmitting this axis the values 1 exits hand control mode.
+There is a system binary axis *exit* which intended for exit from Hand Control Mode. If this axis has a value 1 then the robot leaves the Hand Control Mode.
 ***
 
 # 5 Writing Own New Functions for Robots
