@@ -10,12 +10,44 @@
 Набор координат содержит свойство `Group`, которое определяет принадлежность набора координат устройству. Под устройством понимается робот, позиционер, либо другое устройство. По умолчанию свойство `Group` имеет значение 0, это значит, что набор координат принадлежит первому, подключенному к контроллеру, роботу. 
 В одном объекте `CPoint` может содержаться несколько наборов координат `CCartesianCoordinate` и `CJointsCoordinate`, с разными значениями свойства `Group`. Таким образом, данной точке `CPoint` все устройства с которыми связаны наборы координат займут положения, описанные этими координатами. Свойства класса `CCartesianCoordinate` описывают декартовы координаты и углы Эйлера. В объекте `CJointsCoordinate`содержится набор объектов `CJoint`. `CJoint` описывает значение угла и номер оси робота, или устройства.
 ### Управление движением робота
-Для осуществления движения робота по заданной траектории `CPoints`, используются методы `MoveLineral`, `MoveCartesian`, `MoveJoint`. `MoveLineral` осуществляет линейное движение робота по декартовым координатам.
-`MoveCartesian` осуществляет осевое движение робота по декартовым координатам. 
+Для осуществления движения робота по заданной траектории `CPoints`, используются методы `MoveLineral`, `MoveCartesian`, `MoveJoint`. `MoveLineral` осуществляет линейное движение (LINEAR Interpolated Motion) робота по декартовым координатам.
+`MoveCartesian` осуществляет осевое движение (JOINT Interpolated motion) робота по декартовым координатам.
+`MoveJoint` осуществляет движение осей робота. 
+
+----------
+JOINT Interpolated Motion:
+ 
+
+- All axes start moving at the same time and reach the beginning of the deceleration at the same time.
+ 
+
+- The trajectory is not a simple geometric shape such as a straight line. However, the pathis repeatable.
+ 
+
+- The motion is defined by computing the time for each axis to move from its current position
+to its final position at the programmed speed. The longest time among all axes is used as the
+segment time, and each axis begins and ends its motion in this amount of time.
+The axis with the longest time, called the limiting axis, moves at its programmed speed.
+While the other axes move slower than their programmed speeds, using the same segment
+time for all axes allows them to arrive at the destination in the correct amount of time.
+
+LINEAR Interpolated Motion:
+
+
+- The following rules apply to linear interpolated motion:
+TheTCPmoves in a straight line, from the initial position to the final position, at the
+programmed speed.
+ 
+
+- The orientation of the tool is changed smoothly from the orientation at the initial position to
+the orientation at the destination.
+
+ 
 ### Управление цифровыми входами и выходами робота
 Управление осуществляется при помощи методов `SedDI`, `GetDI`, `GetDo`.
 ### Управление цифровыми входами и выходами во время движения 
-Свойству `MoveControlDO`, объекта `CPoint`, можно присвоить объект `CMoveControlDO`. Свойствами `TriggerType`, `LocationType`, `TriggerValue`, `Do`, `Value` объекта `CMoveControlDO`, описывается когда и какому цифровому выходу устанавливается значение. Свойство `TriggerType` может принимать два значения: `ttDistance` и `ttTime` и описывает когда цифровому выходу должно установиться значение. `ttDistance` - на расстоянии, относительно точки. `ttTime` - за промежуток времени, относительно точки. Расстояние или промежуток времени характеризуется свойством `TriggerValue`. Свойство `LocationType` может принимать два значения: `ltStart` и `ltEnd`, которые описывают до или после точки цифровому выходу будет присвоено значение.
+Свойству `MoveControlDO`, объекта `CPoint`, можно присвоить объект `CMoveControlDO`. Свойствами `TriggerType`, `LocationType`, `TriggerValue`, `Do`, `Value` объекта `CMoveControlDO`, описывается когда и какому цифровому выходу устанавливается значение. Свойство `TriggerType` может принимать два значения: `ttDistance` и `ttTime` и описывает когда цифровому выходу должно установиться значение. `ttDistance` - на расстоянии, относительно точки. `ttTime` - за промежуток времени, относительно точки. Расстояние или промежуток времени характеризуется свойством `TriggerValue`. Свойство `LocationType` может принимать два значения: `ltStart` и `ltEnd`, которые описывают до или после точки цифровому выходу будет присвоено значение. 
+
 
 
 # Начало работы
