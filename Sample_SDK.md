@@ -12,36 +12,23 @@
 ### Управление движением робота
 Для осуществления движения робота по заданной траектории `CPoints`, используются методы `MoveLineral`, `MoveCartesian`, `MoveJoint`. `MoveLineral` осуществляет линейное движение (LINEAR Interpolated Motion) робота по декартовым координатам.
 `MoveCartesian` осуществляет осевое движение (JOINT Interpolated motion) робота по декартовым координатам.
-`MoveJoint` осуществляет движение осей робота. 
+`MoveJoint` осуществляет движение осей робота до заданного значения углов поворота осей. (JOINT Interpolated motion). 
 
 ----------
 JOINT Interpolated Motion:
- 
 
-- All axes start moving at the same time and reach the beginning of the deceleration at the same time.
+- Все оси начинают движение одновременно и достигают начала замедления так же одновременно.
  
-
-- The trajectory is not a simple geometric shape such as a straight line. However, the pathis repeatable.
+- траектория движения не является прямой линией. Однако, эта траектория повторяема.
  
+- Движение определяется временем, необходимым для каждой оси, чтобы, с заданной скоростью, перейти из текущей позиции в конечную. Для выполнения движения, отводится наибольший отрезок времени из всех, расчитанных отрезков для движения каждой из осей. На протяжении этого времени каждая из осей совершает движение. Ось, для движения которой требуется наибольшее время, двигается с заданной скоростью, тогда как остальные оси двигаются с меньшей скоростью. Это позволяет начинать и заканчивать движение всем осям одновременно.   
 
-- The motion is defined by computing the time for each axis to move from its current position
-to its final position at the programmed speed. The longest time among all axes is used as the
-segment time, and each axis begins and ends its motion in this amount of time.
-The axis with the longest time, called the limiting axis, moves at its programmed speed.
-While the other axes move slower than their programmed speeds, using the same segment
-time for all axes allows them to arrive at the destination in the correct amount of time.
 
 LINEAR Interpolated Motion:
 
-
-- The following rules apply to linear interpolated motion:
-TheTCPmoves in a straight line, from the initial position to the final position, at the
-programmed speed.
+- Передвижение TCP робота, из начальной в конечную позицию, с заданной скоростью, происходит по прямой.
  
-
-- The orientation of the tool is changed smoothly from the orientation at the initial position to
-the orientation at the destination.
-
+- Инструмент, по мере движения из начальной точки в конечную, плавно меняет свою ориентацию.
  
 ### Управление цифровыми входами и выходами робота
 Управление осуществляется при помощи методов `SedDI`, `GetDI`, `GetDo`.
