@@ -1898,7 +1898,7 @@ function main(){
 # 17 Получение лицензии RCML
 ### 17.1 Регистрация пользователя в Репозитории
 
-Создайте свой аккаунт в сервисе [Репозиторий](http://repository.rcml.tech/#/sign-up)
+Создайте свой аккаунт в сервисе [Репозиторий](https://repository.rcml.tech/#/sign-up)
 
 ![](images/02.png)
 
@@ -1906,7 +1906,7 @@ function main(){
 
 ![](images/03.png)
 
-Перейдите в секцию [«deployment keys» - ключи развертывания](http://repository.rcml.info/#/keys/deployment) и добавьте свой ключ. Ключ можно сгенерировать согласно командам на скриншотах.
+Перейдите в секцию [«deployment keys» - ключи развертывания](https://repository.rcml.tech/#/keys/deployment) и добавьте свой ключ. Ключ можно сгенерировать согласно командам на скриншотах.
 
 ![](images/04.png)
 
