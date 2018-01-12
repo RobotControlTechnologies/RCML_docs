@@ -112,20 +112,19 @@
 Если необходимо выполнить последовательность действий, то эффективнее сформировать очередь 
 команд и инициировать выполнение этой очереди. При использовании очереди команд, промежутки
 времени между выполнением команд будут меньше, чем в случае выполнения этих команд по отдельности.
-Предположим, что необходимо переместить инструмент 1, установленный на роботе, по траектории из двух точек
+Предположим, что необходимо переместить инструмент `1`, установленный на роботе, по траектории из двух точек
 с декартовыми координатами. При этом, требуется линейное движение. Затем, нужно
 повернуть шестую ось робота в положение `90` градусов. Далее, выбрать инструмент `2` и переместить его по траектории из трех точек с декартовыми координатами, но дивжением по джоинтам.
+Параметр `Que`, метода `MoveLineral`, принимает значение `true`. Это значит, что команда движения по траектории `LinTrajectory` добавится в очередь.
+
 ```cpp
    myRobot.SetTool(1, true);
    CPoints LinTragectory;
-   CPoint::DefSpeed = 100;
+   CPoint::SetDefSpeed(100);
    LinTragectory.AddPoint(new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0));
    LinTragectory.AddPoint(new CPoint(new CCartesianCoordinate(200, 200, 50, 0, 90, 0));
    myRobot.MoveLineral(LinTragectory, true);
-```
-### Параметр `Que`
-Параметр `Que`, метода `MoveLineral`, принимает значение `true`. Это значит, что команда движения по траектории `LinTrajectory` добавится в очередь.
-```cpp
+
    CJoint Joint(6, 90);
    CJointCoordinates* JCoordinates = new CJointCoordinates(Joint);
    CPoints JointPoints;
@@ -135,17 +134,16 @@
    myRobot.SetTool(2, true);
     
    CPoints JointTragectory;
-   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0), 100));
-   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(200, 200, 50, 0, 90, 0), 100));
-   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(300, 200, 50, 0, 90, 0), 100));
+   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0)));
+   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(200, 200, 50, 0, 90, 0)));
+   JointTragectory.AddPoint(new CPoint(new CCartesianCoordinate(300, 200, 50, 0, 90, 0)));
    myRobot.MoveJoint(JointTragectory, true);
 ```
 # Движение по дуге    
 Если необходимо переместить инструмент робота по дуге, можно воспользоваться методом
-`MoveArc`. В качестве аргумента нужно передать набор из трех точек. Из движений по дуге, так же, как и из других движений, можно формировать очередь.
+`MoveArc`. В качестве аргумента нужно передать набор из двух точек. Из движений по дуге, так же, как и из других движений, можно формировать очередь.
 ```cpp
    CPoints ArcPoints;
-   ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(0, 0, 50, 0, 90, 0), 100));
    ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(100, 100, 50, 0, 90, 0), 100));
    ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(200, 0, 50, 0, 90, 0), 100));
    myRobot.MoveArc(ArcPoints);
@@ -159,6 +157,8 @@
    CJoint Joint(1, 90);
    CJointCoordinates* JCoordinates = new CJointCoordinates(Joint);
    JCoordinates->Group = 1; 
+```
+```cpp
    Присвоив значение 1 свойству Group, мы указали, что данный набор координат относится к первому позиционеру.
    CPoints JointPoints;
    JointPoints.AddPoint(new CPoint(JCoordinates, 10));
@@ -174,7 +174,7 @@
    int DoValue = myRobot.GetDO(11);
 ```
     
-#### Добавление триггера.
+#### Управление сигналом на траектории.
 Добавление к точке триггера, который, при срабатывании, установит значение цифровому выходу.
 ```cpp
    CMoveControlDO MoveControlDO;
@@ -185,6 +185,12 @@
    MoveControlDO.Value = 1;
    CPoint* somePoint = new CPoint();
    somePoint.MoveControlDO = MoveControlDO;
+   
+   CPoints myTragectory;
+   CPoint* myPoint = new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0);
+   myPoint->MoveControlDO = MoveControlDO;
+   LinTragectory.AddPoint(myPoint);
+   myRobot.MoveLineral(myTragectory, true);
 ```    
 
 # Описание робота, с использованием интерфейсов из **RCML SDK**.
