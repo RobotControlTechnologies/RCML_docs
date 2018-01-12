@@ -37,7 +37,7 @@ function main() {
 
 Для компиляции программы запустите редактор командной строки в текущей папке и выполните следующую команду:
 ```bash
-rcml_compiler.exe hello.rcml hello.rcml.pc
+rcml_compiler.exe hello.rcml hello.pc
 ```
 В текущей папке появится файл скомпилированной программы *hello.pc*.
 
@@ -47,7 +47,7 @@ rcml_compiler.exe hello.rcml hello.rcml.pc
 
 Чтобы выполнить скомпилированную программу, выполните команду:
 ```bash
-rcml_intepreter.exe hello.rcml
+rcml_intepreter.exe hello.pc
 ```
 Пример успешного выполнения программы показан на рисунке 2.
 
