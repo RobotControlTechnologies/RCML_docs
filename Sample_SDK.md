@@ -28,7 +28,6 @@
 
 - Передвижение TCP робота, из начальной в конечную позицию, с заданной скоростью, происходит по прямой.
 - Инструмент, по мере движения из начальной точки в конечную, плавно меняет свою ориентацию.
-- Во время движения 
 
 ### Движение по дуге:
 
@@ -66,7 +65,7 @@
 ### Джоинтовое движением в новую точку, в декартовых координатах:
 ```cpp
    CPoints trajectory;
-   trajectory.AddPoint(new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0), 100));
+   trajectory.AddPoint(new CPoint(new CCartesianCoordinate(100, 200, 50, 0, 90, 0));
    myRobot.MoveLineral(trajectory);
 ```
 
@@ -88,7 +87,7 @@
 
    myRobot.MoveCartesian(trajectory);
    trajectory.clear();
-   trajectory.addPoint(new CPoint(new CCartesianCoordinate(100, 250, 50, 0, 90, 0), 100));  
+   trajectory.addPoint(new CPoint(new CCartesianCoordinate(100, 250, 50, 0, 90, 0));  
 
    myRobot.MoveLineral(trajectory);
 ```
@@ -144,8 +143,8 @@
 `MoveArc`. В качестве аргумента нужно передать набор из двух точек. Из движений по дуге, так же, как и из других движений, можно формировать очередь.
 ```cpp
    CPoints ArcPoints;
-   ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(100, 100, 50, 0, 90, 0), 100));
-   ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(200, 0, 50, 0, 90, 0), 100));
+   ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(100, 100, 50, 0, 90, 0));
+   ArcPoints.AddPoint(new CPoint(new CCartesianCoordinate(200, 0, 50, 0, 90, 0));
    myRobot.MoveArc(ArcPoints);
 ```
 
@@ -157,13 +156,13 @@
    CJoint Joint(1, 90);
    CJointCoordinates* JCoordinates = new CJointCoordinates(Joint);
    JCoordinates->Group = 1; 
-```
-```cpp
-   Присвоив значение 1 свойству Group, мы указали, что данный набор координат относится к первому позиционеру.
+
    CPoints JointPoints;
    JointPoints.AddPoint(new CPoint(JCoordinates, 10));
    myRobot.MoveJoint(JointPoints, true);
 ```
+Присвоив значение `1` свойству `Group`, мы указали, что данный набор координат относится к первому позиционеру.
+По умолчанию свойство `Group` имеет значение `0`. Нулевая группа координат относится к первому подключенному к контроллеру устройству. Обычно это устройство робот.
     
 # Управление цифровыми входами и выходами робота.
 ### Установка и считывание состояния
@@ -174,7 +173,7 @@
    int DoValue = myRobot.GetDO(11);
 ```
     
-#### Управление сигналом на траектории.
+### Управление сигналом на траектории.
 Добавление к точке триггера, который, при срабатывании, установит значение цифровому выходу.
 ```cpp
    CMoveControlDO MoveControlDO;
