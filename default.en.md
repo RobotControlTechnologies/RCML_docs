@@ -37,7 +37,7 @@ We are going to create your first program using *RCML* and consisting of a singl
 
 To compile a program, run the command line editor in the current folder and execute the following command:
 ```bash
-rcml_compiler.exe hello.rcml hello.rcml.pc
+rcml_compiler.exe hello.rcml hello.pc
 ```
 A file of compiled program hello.pc will appear in the current folder, as shown in the figure 1.
 
@@ -47,9 +47,9 @@ Figure 1 Result of program compilation
 
 To run the compiled program, execute the following command:
 ```bash
-rcml_intepreter.exe hello.rcml
+rcml_intepreter.exe hello.pc
 ```
-Please note that in this case you do not specify pc extension of the compiled program file. The example of successful execution of the program is shown in the figure 2.
+The example of successful execution of the program is shown in the figure 2.
 
 ![](images/d1fbd4ab0bf7541d063ba5b5bcb575f5.png)
 
@@ -1900,7 +1900,7 @@ Access to proprietary modules is granted to customers of *RCML LLC* or on reques
 # 17 Obtaining RCML License
 ### 17.1 User registration in Repository
 
-Create your own account on Repository service web page [Repository](https://repository.rcml.info/#/sign-up)
+Create your own account on Repository service web page [Repository](https://repository.rcml.tech/#/sign-up)
 
 ![](images/02.png)
 
@@ -1908,7 +1908,7 @@ Sign in with created account
 
 ![](images/03.png)
 
-Go to the [deployment keys section](https://repository.rcml.info/#/keys/deployment) and add your key. 
+Go to the [deployment keys section](https://repository.rcml.tech/#/keys/deployment) and add your key. 
 
 Key might be generated according to the commands on the screenshots below.
 
@@ -1936,7 +1936,7 @@ If you get a license for commercial use of *RCML* please make sure that you have
 	- Connected to the local network;
 	- Switched to auto-mode (acknowledgment of security system warnings has been performed).
 	
-On every PC or Controller run the following command in the console: `rcml_intepreter --hardware-info`
+On every PC or Controller run the following command in the console: `rcml_intepreter.exe --hardware-info`
 
 ![](images/07.png)
 
