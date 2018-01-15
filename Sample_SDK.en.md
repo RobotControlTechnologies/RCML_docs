@@ -17,22 +17,34 @@ For robot movement along the `CPoints` trajectory `MoveLineral`, `MoveCartesian`
 - `MoveJoint` starts joint movement to assigned angles of robot axises.
 - `MoveArc` starts arc movement.  
 
-#### Joint movement:
+#### JOINT Interpolated Motion:
 
-Все оси начинают движение одновременно и достигают начала замедления так же одновременно.
-Траектория движения не является прямой линией. Однако, эта траектория повторяема.
-Движение определяется временем, необходимым для каждой оси, чтобы с заданной скоростью перейти из текущей позиции в конечную. Для выполнения движения отводится наибольший отрезок времени из всех рассчитанных отрезков для движения каждой из осей. На протяжении этого времени каждая из осей совершает движение. Ось, для движения которой требуется наибольшее время, двигается с заданной скоростью, тогда как остальные оси двигаются с меньшей скоростью. Это позволяет начинать и заканчивать движение всем осям одновременно.   
+The following rules apply to joint interpolated motion:
+All axes start moving at the same time and reach the beginning of the deceleration at the
+same time.
+The trajectory is not a simple geometric shape such as a straight line. However, the path
+is repeatable.
+The motion is defined by computing the time for each axis to move from its current position
+to its final position at the programmed speed. The longest time among all axes is used as the
+segment time, and each axis begins and ends its motion in this amount of time.
+The axis with the longest time, called the limiting axis, moves at its programmed speed.
+While the other axes move slower than their programmed speeds, using the same segment
+time for all axes allows them to arrive at the destination in the correct amount of time.   
 
 
-#### Линейное движение:
+#### LINEAR Interpolated Motion:
 
-Передвижение TCP робота из начальной в конечную позицию с заданной скоростью происходит по прямой.
-Инструмент, по мере движения из начальной точки в конечную, плавно меняет свою ориентацию.
+The following rules apply to linear interpolated motion:
+The TCP moves in a straight line, from the initial position to the final position, at the
+programmed speed.
+The orientation of the tool is changed smoothly from the orientation at the initial position to
+the orientation at the destination.
 
-#### Движение по дуге:
+#### CIRCULAR Interpolated Motion:
 
-Передвижение TCP из начальной в конечную точку происходит по дуге.
-Дуга строится по трем точкам. Первая точка - это текущее положение TCP. Вторая и третья точки - указанные в качестве параметров. При этом, третья точка является конечной точкой траектории.
+The following rules apply to circular interpolated motion.
+The TCP follows a circular arc from the initial position to the destination.
+An additional position, called the VIA position, must be specified in order for the motion environment to define the arc.
  
 ### Control of digital robot inputs and outputs.
 For contorol `SedDI`, `GetDI`, `GetDO` methodes are used.
@@ -195,8 +207,8 @@ The interface describes robot, which able to use joint movement by cartesian coo
 	 
 	public:
 	  CCoordinates GetCoordinate();
-	  MoveCartesian(CPoints Points, bool Que);
-	  MoveCartesianRelative(CPoints Points, bool Que);
+	  MoveCartesian(CPoints Points, bool Queue);
+	  MoveCartesianRelative(CPoints Points, bool Queue);
    };
 ```
 
