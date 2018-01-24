@@ -114,7 +114,7 @@
 Предположим, что необходимо переместить инструмент `1`, установленный на роботе, по траектории из двух точек
 с декартовыми координатами. При этом требуется линейное движение. Затем нужно
 повернуть шестую ось робота в положение `90` градусов. Далее, выбрать инструмент `2` и переместить его по траектории из трех точек с декартовыми координатами, но движением по джоинтам.
-Параметр `Que` метода `MoveLineral` принимает значение `true`. Это значит, что команда движения по траектории `LinTrajectory` добавится в очередь.
+Параметр `Queue` метода `MoveLineral` принимает значение `true`. Это значит, что команда движения по траектории `LinTrajectory` добавится в очередь.
 
 ```cpp
    myRobot.SetTool(1, true);
@@ -166,7 +166,7 @@
 ### Установка и считывание состояния
 Установка и считывание состояния цифровых входов и выходов робота
 ```cpp
-   myRobot.SetDI(1, 10);
+   myRobot.SetDI(10, 1);
    int DiValue = myRobot.GetDI(10);
    int DoValue = myRobot.GetDO(11);
 ```
@@ -199,8 +199,8 @@
 	 
 	public:
 	  CCoordinates GetCoordinate();
-	  MoveCartesian(CPoints Points, bool Que);
-	  MoveCartesianRelative(CPoints Points, bool Que);
+	  MoveCartesian(CPoints Points, bool Queue);
+	  MoveCartesianRelative(CPoints Points, bool Queue);
    };
 ```
 
