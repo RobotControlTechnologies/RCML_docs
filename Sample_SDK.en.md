@@ -175,7 +175,7 @@ The value of `Group` property is `1`, that means the set of coordinate binded to
 ### Reading and setting of state
 Reading and setting state of digital inputs and outputs 
 ```cpp
-   myRobot.SetDI(1, 10);
+   myRobot.SetDI(10, 1);
    int DiValue = myRobot.GetDI(10);
    int DoValue = myRobot.GetDO(11);
 ```
