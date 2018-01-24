@@ -166,7 +166,7 @@
 ### Установка и считывание состояния
 Установка и считывание состояния цифровых входов и выходов робота
 ```cpp
-   myRobot.SetDI(1, 10);
+   myRobot.SetDI(10, 1);
    int DiValue = myRobot.GetDI(10);
    int DoValue = myRobot.GetDO(11);
 ```
